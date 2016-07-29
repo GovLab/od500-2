@@ -79,7 +79,7 @@
         {# {% set location =  %} #}
         <td class="company__location"><a href="https://www.google.ca/maps/place/{{i.city}},+{{i.state}},+USA" target="_blank">{{i.city}}, {{i.state}}</a></td>
         {# Need to have a custom filter in nunjucks to format the datetime entry #}
-        <td class="company__last-update">{{i.last_updated | truncate(10) }}</td>
+        <td class="company__last-update" data-timestamp={{i.last_updated}}>{{i.last_updated | truncate(10) }}</td>
         
         <td></td>
       </tr>
