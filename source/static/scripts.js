@@ -79,4 +79,28 @@ $(document).ready(function () {
             }
         ]
     });
+
+
+
+    // LIST.JS IMPLEMENTATION
+
+    var options = {
+        valueNames: [ 'company__name', 'company__category', 'company__type', 'company__founded', 'company__location', 'company__last-update' ]
+    };
+
+    var companyList = new List('company_data', options);
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
 }); // doc.ready

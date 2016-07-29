@@ -10,6 +10,9 @@
     Implement JS to make THEAD position:fixed - needs to add the class .table-sortable--fixed to the .table-sortable component, when thead reaches top of viewport.
   #}
 
+
+
+<div id="company_data">
   <table class="table-sortable table-sortable--main-color"> {# .table-sortable--fixed #}
     
     <thead class="company">
@@ -19,7 +22,7 @@
       
         <div class="table-sortable__control-group">
           <span class="table-sortable__control table-sortable__control--simple js-open-table-search"><i class="material-icons">search</i></span>
-          <span class="table-sortable__control table-sortable__control--simple"><i class="material-icons">keyboard_arrow_down</i></span>
+          <span class="table-sortable__control table-sortable__control--simple sort" data-sort="company__name"><i class="material-icons">keyboard_arrow_down</i></span>
         </div>
         <form class="table-sortable__search ">
           <input type="text" placeholder="Filter by text">
@@ -30,27 +33,27 @@
       <th class="table-sortable__head-cell company__category">
         <span>Category</span>
         <div class="table-sortable__control-group">
-          <span class="table-sortable__control table-sortable__control--simple"><i class="material-icons">keyboard_arrow_down</i></span>
+          <span class="table-sortable__control table-sortable__control--simple sort" data-sort="company__category"><i class="material-icons">keyboard_arrow_down</i></span>
         </div>
       </th>
       <th class="table-sortable__head-cell company__type">
         <span>Type</span>
         <div class="table-sortable__control-group">
-          <span class="table-sortable__control table-sortable__control--simple"><i class="material-icons">keyboard_arrow_down</i></span>
+          <span class="table-sortable__control table-sortable__control--simple sort" data-sort="company__type"><i class="material-icons">keyboard_arrow_down</i></span>
         </div>
       </th>
 
       <th class="table-sortable__head-cell company__founded">
         <span>Founded</span>
         <div class="table-sortable__control-group">
-          <span class="table-sortable__control table-sortable__control--simple"><i class="material-icons">keyboard_arrow_down</i></span>
+          <span class="table-sortable__control table-sortable__control--simple sort" data-sort="company_founded"><i class="material-icons">keyboard_arrow_down</i></span>
         </div>
       </th>
       <th class="table-sortable__head-cell company__location">
         <span>Location</span>
         <div class="table-sortable__control-group">
           <span class="table-sortable__control table-sortable__control--simple js-open-table-search"><i class="material-icons">search</i></span>
-          <span class="table-sortable__control table-sortable__control--simple"><i class="material-icons">keyboard_arrow_down</i></span>  
+          <span class="table-sortable__control table-sortable__control--simple sort" data-sort="company__location"><i class="material-icons">keyboard_arrow_down</i></span>  
         </div>
         <form class="table-sortable__search ">
           <input type="text" placeholder="Filter by text">
@@ -60,12 +63,12 @@
       <th class="table-sortable__head-cell company__last-update">
         <span>Last Update</span>
         <div class="table-sortable__control-group">
-          <span class="table-sortable__control table-sortable__control--simple"><i class="material-icons">keyboard_arrow_down</i></span>
+          <span class="table-sortable__control table-sortable__control--simple sort" data-sort="company__last-update"><i class="material-icons">keyboard_arrow_down</i></span>
         </div>
       </th>
       <th class="table-sortable__head-cell">&nbsp;</th>
     </thead>
-    <tbody>
+    <tbody class="list">
       {% for i in companies %}
       <tr class="company" id="{{i.company_name_id}}" >
         <td></td>
@@ -82,9 +85,10 @@
       </tr>
       {% endfor %}
     </tbody>
+
   </table>  
 
-  
+  </div>
   
   
 {% endblock %}
