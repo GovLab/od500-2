@@ -88,18 +88,23 @@ $(document).ready(function () {
     };
 
     var companyList = new List('company_data', options);
+    debugger
 
     var searchButtons = $('.table-sortable__search').find("button[type='submit']")
     searchButtons.on("click", function(e) {
         e.preventDefault();
         if ($(this).parent().hasClass("table-sortable__search--active")) {
             $(this).parent().removeClass("table-sortable__search--active")
+            $(".search").val("");
+            companyList.search();
         }
     })
 
     $("table").keyup(function(event) {
         if ( event.keyCode == "27" ) {
             $(this).parent().find('.table-sortable__search').removeClass("table-sortable__search--active")
+            $(".search").val("");
+            companyList.search();
         }
 
 });
