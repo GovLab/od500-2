@@ -83,20 +83,26 @@ $(document).ready(function () {
 
 
     // LIST.JS IMPLEMENTATION
-
     var options = {
         valueNames: [ 'company__name', 'company__category', 'company__type', 'company__founded', 'company__location', 'company__last-update' ]
     };
 
     var companyList = new List('company_data', options);
 
-      
+    var searchButtons = $('.table-sortable__search').find("button[type='submit']")
+    searchButtons.on("click", function(e) {
+        e.preventDefault();
+        if ($(this).parent().hasClass("table-sortable__search--active")) {
+            $(this).parent().removeClass("table-sortable__search--active")
+        }
+    })
 
+    $("table").keyup(function(event) {
+        if ( event.keyCode == "27" ) {
+            $(this).parent().find('.table-sortable__search').removeClass("table-sortable__search--active")
+        }
 
-
-
-
-
+});
 
 
 
