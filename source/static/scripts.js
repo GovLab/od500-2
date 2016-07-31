@@ -92,25 +92,18 @@ $(document).ready(function () {
     function searchReset() {
         $(".search").val("");
         companyList.search();
-        console.log(companyList.valueNames)
     }
 
 
 // FILTER BY NAME OR LOCATION ONLY
-
-
     $(".search").keyup(function() {
         if (this.id=="company__name") {
             var companyNameOnly = { valueNames: ['company__name']};
             var companyNameList = new List('company_data', companyNameOnly);
-            companyList.search(searchString, {company__name: ""});
         } else if (this.id=="company__location") {
             var companyLocationOnly = {valueNames: ['company__location']};
             var companyLocationList = new List('company_data', companyLocationOnly)
-            companyList.search(searchString, {company__location: ""});
-        } else {
-            companyList.search(searchString)
-        }
+        } 
     });
 // END FILTER
 
@@ -119,6 +112,7 @@ $(document).ready(function () {
     var searchButtons = $('.table-sortable__search').find("button[type='submit']")
 
     searchButtons.on("click", function(e) {
+        e.preventDefault();
         if ($(this).parent().hasClass("table-sortable__search--active")) {
             $(this).parent().removeClass("table-sortable__search--active")
             $(".search").val("");
