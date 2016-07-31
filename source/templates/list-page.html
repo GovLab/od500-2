@@ -25,7 +25,7 @@
           <span class="table-sortable__control table-sortable__control--simple sort" data-sort="company__name"><i class="material-icons">keyboard_arrow_down</i></span>
         </div>
         <form class="table-sortable__search ">
-          <input class="search" type="text" placeholder="Filter by text">
+          <input id="company__name" class="search" type="text" placeholder="Filter by text">
           <button type="submit" class=""><i class="material-icons">close</i></button>
         </form>
       </th>
@@ -56,7 +56,7 @@
           <span class="table-sortable__control table-sortable__control--simple sort" data-sort="company__location"><i class="material-icons">keyboard_arrow_down</i></span>  
         </div>
         <form class="table-sortable__search ">
-          <input class="search" type="text" placeholder="Filter by text">
+          <input id="company__location" class="search" type="text" placeholder="Filter by text">
           <button type="submit" class=""><i class="material-icons">search</i></button>
         </form>
       </th>
@@ -75,11 +75,11 @@
         <td class="company__name"><a href="{{i.url}}" target="_blank">{{i.company_name}}</a></td>
         <td class="company__category">{{i.company_category}}</td>
         <td class="company__type">{{i.company_type}}</td>
-        <td class="company__founded">{{i.year_founded}}</td>
+        <td class="company__founded" data-timestamp={{i.year_founded}}>{{i.year_founded}}</td>
         {# {% set location =  %} #}
         <td class="company__location"><a href="https://www.google.ca/maps/place/{{i.city}},+{{i.state}},+USA" target="_blank">{{i.city}}, {{i.state}}</a></td>
         {# Need to have a custom filter in nunjucks to format the datetime entry #}
-        <td class="company__last-update" data-timestamp={{i.last_updated}}>{{i.last_updated | truncate(10) }}</td>
+        <td class="company__last-update" data-timestamp={{i.last_updated}} >{{i.last_updated | truncate(10) }}</td>
         
         <td></td>
       </tr>

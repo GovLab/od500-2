@@ -87,29 +87,60 @@ $(document).ready(function () {
         valueNames: [ 'company__name', 'company__category', 'company__type', 'company__founded', 'company__location', 'company__last-update' ]
     };
 
-    var companyList = new List('company_data', options);
-    debugger
+    var companyNameOnly = {
+        valueNames: ['company__name']
+    };
 
+    var companyLocationOnly = {
+        valueNames: ['company__location']
+    };
+
+    var companyList = new List('company_data', options);
+    var companyNameList = new List('company_data', companyNameOnly);
+    var companyLocationList = new List('company_data', companyLocationOnly)
+
+
+    function searchReset() {
+        $(".search").val("");
+        companyList.valueNames = options.valueNames;
+        companyList.search();
+        console.log(companyList.valueNames)
+    }
+
+    console.log(companyList)
+
+// FILTER BY NAME OR LOCATION ONLY
+    $(".search").keyup(function() {
+        var searchString = $(this).val();
+        console.log(searchString);
+        if (this.id=="company__name") {
+            companyNameList.search(searchString);
+        } else if (this.id=="company__location") {
+            companyLocationList.search(searchString);
+        }
+    });
+// END FILTER
+
+
+    // Xs and ESC TO CLOSE OUT FORM
     var searchButtons = $('.table-sortable__search').find("button[type='submit']")
+
     searchButtons.on("click", function(e) {
-        e.preventDefault();
         if ($(this).parent().hasClass("table-sortable__search--active")) {
             $(this).parent().removeClass("table-sortable__search--active")
-            $(".search").val("");
-            companyList.search();
+            searchReset();
         }
     })
 
     $("table").keyup(function(event) {
         if ( event.keyCode == "27" ) {
             $(this).parent().find('.table-sortable__search').removeClass("table-sortable__search--active")
-            $(".search").val("");
-            companyList.search();
+            searchReset();
         }
 
-});
+    });
 
-
+    // END ESC FORM
 
 
 
