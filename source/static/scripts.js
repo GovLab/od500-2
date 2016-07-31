@@ -87,36 +87,29 @@ $(document).ready(function () {
         valueNames: [ 'company__name', 'company__category', 'company__type', 'company__founded', 'company__location', 'company__last-update' ]
     };
 
-    var companyNameOnly = {
-        valueNames: ['company__name']
-    };
-
-    var companyLocationOnly = {
-        valueNames: ['company__location']
-    };
-
     var companyList = new List('company_data', options);
-    var companyNameList = new List('company_data', companyNameOnly);
-    var companyLocationList = new List('company_data', companyLocationOnly)
-
 
     function searchReset() {
         $(".search").val("");
-        companyList.valueNames = options.valueNames;
         companyList.search();
         console.log(companyList.valueNames)
     }
 
-    console.log(companyList)
 
 // FILTER BY NAME OR LOCATION ONLY
+
+
     $(".search").keyup(function() {
-        var searchString = $(this).val();
-        console.log(searchString);
         if (this.id=="company__name") {
-            companyNameList.search(searchString);
+            var companyNameOnly = { valueNames: ['company__name']};
+            var companyNameList = new List('company_data', companyNameOnly);
+            companyList.search(searchString, {company__name: ""});
         } else if (this.id=="company__location") {
-            companyLocationList.search(searchString);
+            var companyLocationOnly = {valueNames: ['company__location']};
+            var companyLocationList = new List('company_data', companyLocationOnly)
+            companyList.search(searchString, {company__location: ""});
+        } else {
+            companyList.search(searchString)
         }
     });
 // END FILTER
@@ -128,14 +121,16 @@ $(document).ready(function () {
     searchButtons.on("click", function(e) {
         if ($(this).parent().hasClass("table-sortable__search--active")) {
             $(this).parent().removeClass("table-sortable__search--active")
-            searchReset();
+            $(".search").val("");
+            companyList.search();
         }
     })
 
     $("table").keyup(function(event) {
         if ( event.keyCode == "27" ) {
             $(this).parent().find('.table-sortable__search').removeClass("table-sortable__search--active")
-            searchReset();
+            $(".search").val("");
+            companyList.search();
         }
 
     });
