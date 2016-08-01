@@ -75,7 +75,7 @@
         <td class="company__name"><a href="{{i.url}}" target="_blank">{{i.company_name}}</a></td>
         <td class="company__category">{{i.company_category}}</td>
         <td class="company__type">{{i.company_type}}</td>
-        <td class="company__founded">{{i.year_founded}}</td>
+        <td class="company__founded" data-timestamp={{i.year_founded}}>{{i.year_founded}}</td>
         {# {% set location =  %} #}
         <td class="company__location"><a href="https://www.google.ca/maps/place/{{i.city}},+{{i.state}},+USA" target="_blank">{{i.city}}, {{i.state}}</a></td>
         {# Need to have a custom filter in nunjucks to format the datetime entry #}
