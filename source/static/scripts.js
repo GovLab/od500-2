@@ -102,20 +102,20 @@ $(document).ready(function () {
 // FILTER BY NAME OR LOCATION ONLY
     $(".search").keyup(function() {
         if (this.id=="company__name") {
-            var companyNameOnly = { valueNames: ['company__name']};
-            var companyNameList = new List('company_data', companyNameOnly);
+            var searchString = $(this).val();
+            companyList.search(searchString, ["company__name"] );
         } else if (this.id=="company__location") {
-            var companyLocationOnly = {valueNames: ['company__location']};
-            var companyLocationList = new List('company_data', companyLocationOnly)
+            var searchString = $(this).val();
+            companyList.search(searchString, ["company__location"]);
         } 
     });
 // END FILTER
 
 
 
-    // $(".js-open-table-search").on("click", function(e) {
-    //     // MOVE CURSOR TO FORM FIELD
-    // }) 
+    $(".js-open-table-search").on("click", function(e) {
+       $($(this).attr('data-target')).focus();
+    }) 
     
     // Xs and ESC TO CLOSE OUT FORM
     var searchButtons = $('.table-sortable__search').find("button[type='submit']")
@@ -131,19 +131,14 @@ $(document).ready(function () {
     })
 
 
-    // FIX KEY UP Function
-    // FIX DATE FOUNDED FILTERING
-    // INSERT CURSOR ON BUTTON CLICK
+    $("body").keyup(function(event) {
+        if ( event.keyCode == "27" ) {
+            $(this).parent().find('.table-sortable__search').removeClass("table-sortable__search--active");
+            $('.search').val("");
+            companyList.search();
+        }
 
-    // $("body").keyup(function(event) {
-    //     alert(event.keyCode)
-    //     if ( event.keyCode == "27" ) {
-    //         $(this).parent().find('.table-sortable__search').removeClass("table-sortable__search--active");
-    //         $('.search').val("");
-    //         companyList.search();
-    //     }
-
-    // });
+    });
 
     // END ESC FORM
 
