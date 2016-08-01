@@ -89,14 +89,14 @@ $(document).ready(function () {
 
     var companyList = new List('company_data', options);
 
-    function searchReset() {
-        $(".search").val("");
-        var options = {
-            valueNames: [ 'company__name', 'company__category', 'company__type', 'company__founded', 'company__location', 'company__last-update' ]
-        };
-        var companyList = new List('company_data', options);
-        companyList.search();
-    }
+    // function searchReset() {
+    //     $(".search").val("");
+    //     var options = {
+    //         valueNames: [ 'company__name', 'company__category', 'company__type', 'company__founded', 'company__location', 'company__last-update' ]
+    //     };
+    //     var companyList = new List('company_data', options);
+    //     companyList.search();
+    // }
 
 
 // FILTER BY NAME OR LOCATION ONLY
@@ -113,18 +113,20 @@ $(document).ready(function () {
 
 
 
-    $(".js-open-table-search").on("click", function(e) {
-        // MOVE CURSOR TO FORM FIELD
-    }) 
+    // $(".js-open-table-search").on("click", function(e) {
+    //     // MOVE CURSOR TO FORM FIELD
+    // }) 
     
     // Xs and ESC TO CLOSE OUT FORM
     var searchButtons = $('.table-sortable__search').find("button[type='submit']")
 
     searchButtons.on("click", function(e) {
-        // e.preventDefault();
+        e.preventDefault();
         if ($(this).parent().hasClass("table-sortable__search--active")) {
             $(this).parent().removeClass("table-sortable__search--active")
-            searchReset();
+            $('.search').val("");
+            companyList.search();
+            companyList.update();
         }
     })
 
@@ -133,13 +135,15 @@ $(document).ready(function () {
     // FIX DATE FOUNDED FILTERING
     // INSERT CURSOR ON BUTTON CLICK
 
-    $("body").keyup(function(event) {
-        if ( event.keyCode == "27" ) {
-            $(this).parent().find('.table-sortable__search').removeClass("table-sortable__search--active");
-            searchReset();
-        }
+    // $("body").keyup(function(event) {
+    //     alert(event.keyCode)
+    //     if ( event.keyCode == "27" ) {
+    //         $(this).parent().find('.table-sortable__search').removeClass("table-sortable__search--active");
+    //         $('.search').val("");
+    //         companyList.search();
+    //     }
 
-    });
+    // });
 
     // END ESC FORM
 
@@ -147,7 +151,6 @@ $(document).ready(function () {
     var sortClickButtons = $(".table-sortable__control > i:contains('keyboard_arrow_down')");
     sortClickButtons.on("click", function() {
         $(this).text() == "keyboard_arrow_down" ? $(this).text("keyboard_arrow_up") : $(this).text("keyboard_arrow_down")
-
         
     });
     // END SORT ICON
