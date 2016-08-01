@@ -81,36 +81,39 @@ $(document).ready(function () {
     });
 
 
+    // Fixed Table Header
+    $(window).scroll(function(){
+        var yPosition = $( window ).scrollTop(),
+            target = $('.table-sortable'),
+            offset = target.offset().top;
+        yPosition >= offset ? target.addClass("table-sortable--fixed") : target.removeClass("table-sortable--fixed");
+    });
 
-    // LIST.JS IMPLEMENTATION
+
+    // List.js Implementation
     var options = {
         valueNames: [ 'company__name', 'company__category', 'company__type', 'company__founded', 'company__location', 'company__last-update' ]
     };
 
     var companyList = new List('company_data', options);
 
-    // function searchReset() {
-    //     $(".search").val("");
-    //     var options = {
-    //         valueNames: [ 'company__name', 'company__category', 'company__type', 'company__founded', 'company__location', 'company__last-update' ]
-    //     };
-    //     var companyList = new List('company_data', options);
-    //     companyList.search();
-    // }
+    function searchReset() {
+        $(".search").val("");
+        companyList.search();
+    }
 
-
-// FILTER BY NAME OR LOCATION ONLY
+    // Filter by name and location
     $(".search").keyup(function() {
-        if (this.id=="company__name") {
+        console.log(this)
+        if (this.id=="company__name--input") {
             var searchString = $(this).val();
+            console.log(this)
             companyList.search(searchString, ["company__name"] );
-        } else if (this.id=="company__location") {
+        } else if (this.id=="company__location--input") {
             var searchString = $(this).val();
             companyList.search(searchString, ["company__location"]);
         } 
     });
-// END FILTER
-
 
 
     $(".js-open-table-search").on("click", function(e) {
@@ -124,23 +127,16 @@ $(document).ready(function () {
         e.preventDefault();
         if ($(this).parent().hasClass("table-sortable__search--active")) {
             $(this).parent().removeClass("table-sortable__search--active")
-            $('.search').val("");
-            companyList.search();
-            companyList.update();
+            searchReset()
         }
     })
-
 
     $("body").keyup(function(event) {
         if ( event.keyCode == "27" ) {
             $(this).parent().find('.table-sortable__search').removeClass("table-sortable__search--active");
-            $('.search').val("");
-            companyList.search();
+            searchReset();
         }
-
     });
-
-    // END ESC FORM
 
     // SORT ICON
     var sortClickButtons = $(".table-sortable__control > i:contains('keyboard_arrow_down')");
@@ -148,7 +144,5 @@ $(document).ready(function () {
         $(this).text() == "keyboard_arrow_down" ? $(this).text("keyboard_arrow_up") : $(this).text("keyboard_arrow_down")
         
     });
-    // END SORT ICON
-
 
 }); // doc.ready
