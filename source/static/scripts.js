@@ -79,4 +79,70 @@ $(document).ready(function () {
             }
         ]
     });
+
+
+    // Fixed Table Header
+    $(window).scroll(function(){
+        var yPosition = $( window ).scrollTop(),
+            target = $('.table-sortable'),
+            offset = target.offset().top;
+        yPosition >= offset ? target.addClass("table-sortable--fixed") : target.removeClass("table-sortable--fixed");
+    });
+
+
+    // List.js Implementation
+    var options = {
+        valueNames: [ 'company__name', 'company__category', 'company__type', 'company__founded', 'company__location', 'company__last-update' ]
+    };
+
+    var companyList = new List('company_data', options);
+
+    function searchReset() {
+        $(".search").val("");
+        companyList.search();
+    }
+
+    // Filter by name and location
+    $(".search").keyup(function() {
+        console.log(this)
+        if (this.id=="company__name--input") {
+            var searchString = $(this).val();
+            console.log(this)
+            companyList.search(searchString, ["company__name"] );
+        } else if (this.id=="company__location--input") {
+            var searchString = $(this).val();
+            companyList.search(searchString, ["company__location"]);
+        } 
+    });
+
+
+    $(".js-open-table-search").on("click", function(e) {
+       $($(this).attr('data-target')).focus();
+    }) 
+    
+    // Xs and ESC TO CLOSE OUT FORM
+    var searchButtons = $('.table-sortable__search').find("button[type='submit']")
+
+    searchButtons.on("click", function(e) {
+        e.preventDefault();
+        if ($(this).parent().hasClass("table-sortable__search--active")) {
+            $(this).parent().removeClass("table-sortable__search--active")
+            searchReset()
+        }
+    })
+
+    $("body").keyup(function(event) {
+        if ( event.keyCode == "27" ) {
+            $(this).parent().find('.table-sortable__search').removeClass("table-sortable__search--active");
+            searchReset();
+        }
+    });
+
+    // SORT ICON
+    var sortClickButtons = $(".table-sortable__control > i:contains('keyboard_arrow_down')");
+    sortClickButtons.on("click", function() {
+        $(this).text() == "keyboard_arrow_down" ? $(this).text("keyboard_arrow_up") : $(this).text("keyboard_arrow_down")
+        
+    });
+
 }); // doc.ready
