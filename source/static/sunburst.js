@@ -15,7 +15,7 @@ var color = d3.scale.category20c();
 var svg = d3.select(".sunburst-chart").append("svg")
     .attr("width", width)
     .attr("height", height)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 10) + ")");
 
 var partition = d3.layout.partition()
@@ -64,20 +64,27 @@ d3.json("sunburst-no-data.json", function(error, root) {
          .style("left", (d3.event.pageX+10)+"px");
      })
      .on("mouseout", function(){return tooltips.style("opacity", 0);});
-
-
+     
+// REPLACE WITH ACTUAL LINKS
   function renderLink(d) {
     console.log(d.name + ".html")
-    window.location = "#";
+    window.location = "list-page.html";
     return
   }
-  
+// END RENDERLINK
+
   var maxDepth = 3;
+
   function click(d) {
-    console.log("denny", d.depth)
     if (d.depth == maxDepth) {
       renderLink(d)
     } else {
+      var active_layer = d3.select(this).datum().depth;
+      console.log(active_layer);
+      d3.selectAll(".layer-" + active_layer)
+     .classed("active-layer", true);
+      d3.selectAll(".layer-" + (active_layer + 1))
+     .classed("active-layer", true);
         // fade out all text elements
         // text.transition().attr("opacity", 0);
         path.transition()

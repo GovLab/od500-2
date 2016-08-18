@@ -1,0 +1,51 @@
+// // colors
+$purple: #523080;
+$gray: rgba(black, .2);
+
+#sunburst-vizz {
+    text-align: center;
+  svg {
+    path {
+      stroke: white;
+      fill-rule: evenodd;
+
+    }
+
+    g {
+      fill: none;
+      .layer-0, .layer-1 {fill: $gray};
+      // .layer-1 {fill:none;};
+      // .layer-2 {fill:none;};
+      // .layer-3 {fill:none;};
+    }
+
+    .layer-0 {
+      &:hover {fill: $purple;}
+    }
+    .layer-1 {
+      &:hover {fill: rgba($purple, .8);}
+    }
+    .layer-2 {
+      &:hover {fill: rgba($purple, .6);}
+    }
+    .layer-3 {
+      &:hover {fill: rgba($purple, .4);}
+    }
+    text {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+  }
+  .tooltips {
+    padding: 3px 5px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    position: absolute;
+    z-index: 10;
+    opacity: 0
+  }
+  .section_name {
+    font-weight: 700;
+  }
+  .active-layer {fill:$gray;}
+}
