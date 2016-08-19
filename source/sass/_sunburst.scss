@@ -85,6 +85,15 @@ $main-color: $blue;
     top: 360px;
     left: calc(50% - 312px);
   }
+  .tooltip-title {font-size: 24px;}
+  .tooltip-location {}
+  .tooltip-company-type {}
+  .tooltip-company-category {}
+  .tooltip-source-count {}
+  .tooltip-used-by {}
+  .tooltip-fte {}
+  .tooltip-business-model {}
+
   .section_name {
     font-weight: 700;
   }

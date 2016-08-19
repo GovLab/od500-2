@@ -33,18 +33,33 @@ var tooltips = d3.select(".sunburst-chart")
 
 
 function format_description(d) {
-  var html = '<span class="section_name">'
-  html += d.name + '<br>'
-  // html += d.companyCategory
-  d.city ? html += d.city + ', ' : html += ""
-  d.state ? html += d.state + "<br>" : html +=""
-  d.companyType ? html += "Company Type: " + d.companyType  + '<br>': html += ""
-  d.companyCategory ? html += "Company Category: " + d.companyCategory + "<br>": html += ""
-  d.sourceCount ? html += d.sourceCount +" sources being used" : html += ""
-  d.usedBy_count ? html += "Used by " + d.usedBy_count + ' companies<br>' : html+=""
-  d.fte ? html += "Number of full time employees: "+ d.fte + '<br>' : html += ""
-  d.businessModel ? html += "Business Model: " + d.businessModel + "<br>" : html += ""
-  html += '</span><br>' 
+  console.log(d)
+  var html = '<div class="section_name">'
+  html += '<div class="tooltip-title">' + d.name  + '</div>'
+  if (d.city && d.state) {
+    html += '<div class="tooltip-location">'+ d.city + ', '+ d.state + '</div>'
+  }
+  if (d.companyType) {
+    html += '<div class="tooltip-company_type>' + d.companyType + '</div>'
+  }
+  if (d.companyCategory) {
+    html += '<div class="tooltip-company-category">' +d.companyCategory + '</div>'
+  }
+  if (d.sourceCount) {
+    html+= '<div class="tooltip-source-count">' + d.sourceCount + '</div>'
+  }
+
+  if (d.usedBy_count) {
+    html += '<div class="tooltip-used-by">Used by '+ d.usedBy_count
+    console.log(d.usedBy_count)
+  }
+  if (d.fte) {
+    html += '<div class="tooltip-fte">' + d.fte + '</div>'
+  }
+  if (d.businessModel) {
+    html += '<div class="tooltip-business-model">' + d.businessModel + '</div>'
+  }
+  html += '</div>'
   return  html;
 }
 
