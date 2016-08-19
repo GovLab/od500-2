@@ -33,12 +33,22 @@ var tooltips = d3.select(".sunburst-chart")
 
 
 function format_description(d) {
-  // console.log(d)
-  var name = d;
-      return  '<span class="section_name">' + name + '</span>';
+  var html = '<span class="section_name">'
+  html += d.name + '<br>'
+  // html += d.companyCategory
+  d.city ? html += d.city + ', ' : html += ""
+  d.state ? html += d.state + "<br>" : html +=""
+  d.companyType ? html += "Company Type: " + d.companyType  + '<br>': html += ""
+  d.companyCategory ? html += "Company Category: " + d.companyCategory + "<br>": html += ""
+  d.sourceCount ? html += d.sourceCount +" sources being used" : html += ""
+  d.usedBy_count ? html += "Used by " + d.usedBy_count + ' companies<br>' : html+=""
+  d.fte ? html += "Number of full time employees: "+ d.fte + '<br>' : html += ""
+  d.businessModel ? html += "Business Model: " + d.businessModel + "<br>" : html += ""
+  html += '</span><br>' 
+  return  html;
 }
 
-d3.json("sunburst-no-data.json", function(error, root) {
+d3.json("sunburst-no-data-new.json", function(error, root) {
   var g = svg.selectAll("g")
       .data(partition.nodes(root))
     .enter().append("g");
@@ -51,7 +61,7 @@ d3.json("sunburst-no-data.json", function(error, root) {
     .on("click", click)
     .on("mouseover", function(d) {
       tooltips.html(function() {
-        var name = format_description(d.name);
+        var name = format_description(d);
         return name;
       });
       return tooltips.transition()
@@ -109,16 +119,16 @@ d3.json("sunburst-no-data.json", function(error, root) {
 d3.select(self.frameElement).style("height", height + "px");
 
 // Interpolate the scales!
-function arcTween(d) {
-  var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
-      yd = d3.interpolate(y.domain(), [d.y, 1]),
-      yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
-  return function(d, i) {
-    return i
-        ? function(t) { return arc(d); }
-        : function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
-  };
-}
+// function arcTween(d) {
+//   var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+//       yd = d3.interpolate(y.domain(), [d.y, 1]),
+//       yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+//   return function(d, i) {
+//     return i
+//         ? function(t) { return arc(d); }
+//         : function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
+//   };
+// }
 
 function computeTextRotation(d) {
   return (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180;
