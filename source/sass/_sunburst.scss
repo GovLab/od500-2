@@ -4,10 +4,24 @@ $gray: rgba(black, .1);
 $blue: #008ab3;
 $main-color: $blue;
 
+.sunburst-panel {
+  background-color: $main-color;
+  height: 368px;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  z-index: 11;
+  top: 380px;
+
+}
+
 #sunburst-vizz {
     text-align: center;
     position: relative;
 
+  .sunburst-chart {
+    position: relative;
+  }
   svg {
 
     path {
@@ -33,7 +47,9 @@ $main-color: $blue;
       .layer-3 { fill: rgba(black, .05)};
 
       .layer-0 {
-        &:hover {fill: $main-color;}
+        fill: rgba($main-color, .7);
+        
+        &:hover {}
       }
       .layer-1 {
         &:nth-child(even) {fill: rgba(black, 1);}
@@ -55,20 +71,19 @@ $main-color: $blue;
     }
   }
   .tooltips {
-    padding: 80px 30px;
+    padding: 30px;
     box-sizing: border-box;
     text-align: center;
     font-family: $main-font;
-    color: $main-color;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: white;
+    width: 700px;
+    height: 100px;
     position: absolute;
-    z-index: 10;
-    width: 260px;
-    height: 260px;
-    background-color: white;
-    top: 33.5%;
-    border-radius: 50%;
-    right: calc(50% - 130px);
-    // opacity: 0
+    z-index: 18;
+    top: 360px;
+    left: calc(50% - 312px);
   }
   .section_name {
     font-weight: 700;
