@@ -1,6 +1,7 @@
 // // colors
 $purple: #523080;
 $gray: rgba(black, .2);
+$blue: #008ab3;
 
 #sunburst-vizz {
     text-align: center;
@@ -12,8 +13,8 @@ $gray: rgba(black, .2);
     }
 
     g {
-      fill: none;
-      .layer-0, .layer-1 {fill: $gray};
+      fill: $gray;
+      // .layer-0 {fill:none;};
       // .layer-1 {fill:none;};
       // .layer-2 {fill:none;};
       // .layer-3 {fill:none;};
@@ -47,5 +48,5 @@ $gray: rgba(black, .2);
   .section_name {
     font-weight: 700;
   }
-  .active-layer {fill:$gray;}
+  // .active-layer {fill:$blue;}
 }

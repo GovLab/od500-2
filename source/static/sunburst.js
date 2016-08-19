@@ -83,8 +83,8 @@ d3.json("sunburst-no-data.json", function(error, root) {
       console.log(active_layer);
       d3.selectAll(".layer-" + active_layer)
      .classed("active-layer", true);
-      d3.selectAll(".layer-" + (active_layer + 1))
-     .classed("active-layer", true);
+     //  d3.selectAll(".layer-" + (active_layer + 1))
+     // .classed("active-layer", true);
         // fade out all text elements
         // text.transition().attr("opacity", 0);
         path.transition()
