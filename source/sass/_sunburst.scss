@@ -86,13 +86,28 @@ $main-color: $blue;
     left: calc(50% - 312px);
   }
   .tooltip-title {font-size: 24px;}
-  .tooltip-location {}
-  .tooltip-company-type {}
-  .tooltip-company-category {}
-  .tooltip-source-count {}
-  .tooltip-used-by {}
-  .tooltip-fte {}
-  .tooltip-business-model {}
+  .tooltip-location {
+    &:before { content:"Location: "}
+  }
+  .tooltip-company-type {
+    &:before { content:"Company Type: "}
+  }
+  .tooltip-company-category {
+    &:before { content:"Company Category: "}
+  }
+  .tooltip-source-count {
+    &:before { content:"Number of sources used: "}
+  }
+  .tooltip-used-by {
+    &:before { content:"Used by: "}
+    &:after {content: " sources"}
+  }
+  .tooltip-fte {
+    &:before { content:"# of Full Time Employees: "}
+  }
+  .tooltip-business-model {
+    &:before { content:"Business Model: "}
+  }
 
   .section_name {
     font-weight: 700;
