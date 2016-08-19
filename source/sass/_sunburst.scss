@@ -1,0 +1,77 @@
+// // colors
+$purple: #523080;
+$gray: rgba(black, .1);
+$blue: #008ab3;
+$main-color: $blue;
+
+#sunburst-vizz {
+    text-align: center;
+    position: relative;
+
+  svg {
+
+    path {
+      // stroke: rgba(white, .2);
+      fill-rule: evenodd;
+
+    }
+
+    g {
+      // fill: rgba(black, .5);
+      
+      .layer-0,
+      .layer-1,
+      .layer-2,
+      .layer-3 {
+        @extend .u-transition;
+
+      }
+
+      .layer-0 { fill: $blue};
+      .layer-1 { fill: rgba(black, .15)};
+      .layer-2 { fill: rgba(black, .10)};
+      .layer-3 { fill: rgba(black, .05)};
+
+      .layer-0 {
+        &:hover {fill: $main-color;}
+      }
+      .layer-1 {
+        &:nth-child(even) {fill: rgba(black, 1);}
+        &:hover {fill: rgba($main-color, .5);}
+      }
+      .layer-2 {
+        &:nth-child(even) {fill: rgba(black, .15);}
+        &:hover {fill: rgba($main-color, .5);}
+      }
+      .layer-3 {
+        &:nth-child(even) {fill: rgba(black, .1);}
+        &:hover {fill: rgba($main-color, .5);}
+      }
+    }
+
+    text {
+      font-family: $main-font;
+      font-size: 12px;
+    }
+  }
+  .tooltips {
+    padding: 80px 30px;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: $main-font;
+    color: $main-color;
+    position: absolute;
+    z-index: 10;
+    width: 260px;
+    height: 260px;
+    background-color: white;
+    top: 33.5%;
+    border-radius: 50%;
+    right: calc(50% - 130px);
+    // opacity: 0
+  }
+  .section_name {
+    font-weight: 700;
+  }
+  // .active-layer {fill:$blue;}
+}

@@ -55,15 +55,14 @@ d3.json("sunburst-no-data.json", function(error, root) {
         return name;
       });
       return tooltips.transition()
-       .duration(50)
-       .style("opacity", 0.9);
+       .duration(50);
       })
-     .on("mousemove", function(d) {
-       return tooltips
-         .style("top", (d3.event.pageY-10)+"px")
-         .style("left", (d3.event.pageX+10)+"px");
-     })
-     .on("mouseout", function(){return tooltips.style("opacity", 0);});
+     // .on("mousemove", function(d) {
+     //   return tooltips
+     //     .style("top", (d3.event.pageY-10)+"px")
+     //     .style("left", (d3.event.pageX+10)+"px");
+     // })
+     // .on("mouseout", function(){return tooltips.style("opacity", 0);});
      
 // REPLACE WITH ACTUAL LINKS
   function renderLink(d) {
