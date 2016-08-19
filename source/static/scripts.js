@@ -80,6 +80,17 @@ $(document).ready(function () {
         ]
     });
 
+    // Timeline Default
+    var timelineItems = $(".timeline-boxes__item");
+    var latestTimelineItem = timelineItems[timelineItems.length -1]
+    $(latestTimelineItem).addClass("timeline-boxes__item--latest");
+
+    $(".timeline-boxes").on("mouseover", function() {
+        $(latestTimelineItem).removeClass("timeline-boxes__item--latest")
+    }).on("mouseout", function() {
+        $(latestTimelineItem).addClass("timeline-boxes__item--latest")
+    });
+
 
     // Fixed Table Header
     $(window).scroll(function(){

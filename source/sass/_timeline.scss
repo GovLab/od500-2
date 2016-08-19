@@ -35,6 +35,7 @@
     transition: all .2s ease-in-out;
 
     &:hover,
+    &--latest,
     &--active-4 li { 
       color: rgba($white, 1); 
       padding-top: 3%;
