@@ -16,11 +16,14 @@ $main-color: $blue;
 }
 
 #sunburst-vizz {
-    text-align: center;
     position: relative;
 
   .sunburst-chart {
     position: relative;
+  }
+  .sunburst-trail {
+    position: relative;
+    text-align: center;
   }
   svg {
 
@@ -99,8 +102,8 @@ $main-color: $blue;
     &:before { content:"Number of sources used: "}
   }
   .tooltip-used-by {
-    &:before { content:"Used by: "}
-    &:after {content: " sources"}
+    &:before { content:"Used by "}
+    &:after {content: " companies"}
   }
   .tooltip-fte {
     &:before { content:"# of Full Time Employees: "}
@@ -112,5 +115,21 @@ $main-color: $blue;
   .section_name {
     font-weight: 700;
   }
-  // .active-layer {fill:$blue;}
+  #ancestor {fill: rgba($blue, .5);}
+  #current {fill:red;}
+  .trail-item {
+    box-sizing: border-box;
+    // text-align: right;
+    font-family: $main-font;
+    font-size: 1rem;
+    font-weight: 700;
+    &:after {
+      font-family: 'Material Icons';
+      content:"keyboard_arrow_right";
+      vertical-align: -3px;
+    }
+    &:last-of-type { 
+      &:after {content:"";}
+    }
+  }
 }
