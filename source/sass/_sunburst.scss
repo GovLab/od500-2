@@ -40,8 +40,7 @@ $main-color: $blue;
       .layer-1,
       .layer-2,
       .layer-3 {
-        @extend .u-transition;
-
+        // @extend .u-transition;
       }
 
       .layer-0 { fill: $blue};
