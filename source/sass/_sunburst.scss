@@ -110,7 +110,15 @@ $main-color: $blue;
   .tooltip-business-model {
     &:before { content:"Business Model: "}
   }
-
+  .tooltip-subagencies {
+    &:before { content:"# of Subagencies: "}
+  }
+  .tooltip-total-agencies {
+    &:before { content:"Total Agencies: "}
+  }
+  .tooltip-total-companies {
+    &:before { content:"Total Companies: "}
+  }
   .section_name {
     font-weight: 700;
   }

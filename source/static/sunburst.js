@@ -49,13 +49,23 @@ function format_description(d) {
     html+= '<div class="tooltip-source-count">' + d.sourceCount + '</div>'
   }
   if (d.usedBy_count) {
-    html += '<div class="tooltip-used-by">'+ d.usedBy_count
+    html += '<div class="tooltip-used-by">'+ d.usedBy_count + '</div>'
   }
   if (d.fte) {
     html += '<div class="tooltip-fte">' + d.fte + '</div>'
   }
   if (d.businessModel && (d.businessModel.length !== 0)) {
     html += '<div class="tooltip-business-model">' + d.businessModel + '</div>'
+  }
+  if (d.subagencies) {
+    html += '<div class="tooltip-subagencies">' + d.subagencies.length + '</div>'
+  }
+
+  if (d.total_agencies) {
+    html += '<div class="tooltip-total-agencies">' + d.total_agencies + '</div>'
+  }
+  if (d.total_companies) {
+    html += '<div class="tooltip-total-companies">' + d.total_companies + '</div>'
   }
   html += '</div>'
   return  html;
