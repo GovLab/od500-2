@@ -12,137 +12,169 @@ $main-color: $blue;
   left: 0;
   z-index: 11;
   top: 380px;
-
 }
 
 #sunburst-vizz {
-    position: relative;
+  position: relative;
+  font-family: $main-font;
 
   .sunburst-chart {
     position: relative;
+    width: 700px;
+    margin: 0 auto;
+    text-align: center;
   }
   .sunburst-trail {
     position: relative;
     text-align: center;
   }
+
+
   svg {
-
-    path {
-      // stroke: rgba(white, .2);
-      fill-rule: evenodd;
-
-    }
-
-    g {
-      // fill: rgba(black, .5);
-      
-      .layer-0,
-      .layer-1,
-      .layer-2,
-      .layer-3 {
-        // @extend .u-transition;
-      }
-
+    path { fill-rule: evenodd; }
+    g { 
       .layer-0 { fill: $blue};
       .layer-1 { fill: rgba(black, .15)};
       .layer-2 { fill: rgba(black, .10)};
       .layer-3 { fill: rgba(black, .05)};
 
-      .layer-0 {
-        fill: rgba($main-color, .7);
-        
-        &:hover {}
-      }
+      .layer-0 { fill: rgba($main-color, 1); }
+      
       .layer-1 {
         &:nth-child(even) {fill: rgba(black, 1);}
         &:hover {fill: rgba($main-color, .5);}
       }
+      
       .layer-2 {
         &:nth-child(even) {fill: rgba(black, .15);}
         &:hover {fill: rgba($main-color, .5);}
       }
+      
       .layer-3 {
         &:nth-child(even) {fill: rgba(black, .1);}
         &:hover {fill: rgba($main-color, .5);}
       }
     }
-
-    text {
-      font-family: $main-font;
-      font-size: 12px;
-    }
   }
+
   .tooltips {
-    padding: 30px;
-    box-sizing: border-box;
     text-align: center;
-    font-family: $main-font;
-    font-size: 1.2rem;
     text-transform: uppercase;
     color: white;
-    width: 700px;
-    height: 100px;
-    position: absolute;
-    z-index: 18;
-    top: 360px;
-    left: calc(50% - 312px);
+    width: 100%;
   }
-  .tooltip-title {font-size: 24px;}
-  .tooltip-location {
-    &:before { content:"Location: "}
-  }
-  .tooltip-company-type {
-    &:before { content:"Company Type: "}
-  }
-  .tooltip-company-category {
-    &:before { content:"Company Category: "}
-  }
-  .tooltip-source-count {
-    &:before { content:"Number of sources used: "}
-  }
-  .tooltip-used-by {
-    &:before { content:"Used by "}
-    &:after {content: " companies"}
-  }
-  .tooltip-fte {
-    &:before { content:"# of Full Time Employees: "}
-  }
-  .tooltip-business-model {
-    &:before { content:"Business Model: "}
-  }
-  .tooltip-subagencies {
-    &:before { content:"Subagencies: "}
-  }
-  .tooltip-total-agencies {
-    &:before { content:"Total Agencies: "}
-  }
-  .tooltip-total-companies {
-    &:before { content:"Total Companies: "}
-  }
-  .section_name {
-    font-weight: 700;
-  }
-  #ancestor {
-    fill: rgba($main-color, .8);
-  }
-  .ancestor-0 { fill: rgba($purple, .5) !important;}
-  .ancestor-1 { fill: rgba($gray, .5) !important;}
-  .ancestor-2 { fill: rgba($blue, .5) !important;}
 
+  // All Tooltips
+  .tooltip-title {
+    margin-top: 30px;
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  .tooltip-total-companies,
+  .tooltip-source-count,
+  .tooltip-used-by {
+    position: absolute;
+    top: -125px;
+    font-size: 6rem;
+    line-height: 1;
+    font-weight: 100;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    pointer-events: none;
+    cursor: default;
+
+    &:after { 
+      display: block;
+      content:"Sources Used";
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: rgba(white, .5);
+    }
+  }
+
+  .tooltip-total-agencies {
+    font-size: 5rem;
+    font-weight: 100;
+    line-height: 1;
+    margin-top: 10px;
+    
+    &:after { 
+      content:"Agencies";
+      font-size: 1rem;
+      display: block;
+    }
+  }
+
+  .tooltip-total-companies:after { content:"Companies"; }
+  .tooltip-used-by:after { content: "Companies"; }
+
+  // Layer 3
+
+  .tooltip__more-info {
+    font-size: .9rem;
+    font-weight: 100;
+    text-transform: capitalize;
+
+    span {
+      font-style: normal;
+      font-weight: 600;
+    } 
+  }
+
+  .tooltip-location:before { 
+      content:" in ";
+      font-style: italic;
+      font-weight: 400;
+  }
+  
+  .tooltip-company-category { color: rgba(white, .5); }
+  .tooltip-company-type:after { content:" Company"; }
+
+  .tooltip-subagencies {
+    font-weight: 400;
+    text-transform: capitalize;
+    width: 800px;
+    margin: 0 auto;
+
+    span {
+      background-color: rgba(white, .1);
+      margin: 2px;
+      padding: 2px 5px;
+      display: inline-block;
+      font-weight: 400;
+    }
+
+    &:before { 
+      content:"Subagencies"; 
+      display: block;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+  }
+
+  .section_name { font-weight: 700; }
+  #ancestor { fill: $main-color; }
+  .ancestor-0 { fill: rgba($blue, .7) !important; }
+  .ancestor-1 { fill: rgba($blue, .5) !important; }
+  .ancestor-2 { fill: rgba($blue, .3) !important; }
+
+  .sunburst-trail {
+    display: block;
+    background-color: rgba(white, .1);
+    text-align: center;
+    color: $white;
+    padding: 0;
+    margin: 0;
+  }
 
   .trail-item {
-    box-sizing: border-box;
-    // text-align: right;
-    font-family: $main-font;
-    font-size: 1rem;
-    font-weight: 700;
-    &:after {
-      font-family: 'Material Icons';
-      content:"keyboard_arrow_right";
-      vertical-align: -3px;
-    }
-    &:last-of-type { 
-      &:after {content:"";}
-    }
+    display: inline-block;
+    padding: 2px 5px;
+    margin: 5px 0 5px 4px;
+    background-color: rgba(white, .1);
+
+    &:last-of-type { display: none; }
   }
 }

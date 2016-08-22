@@ -27,7 +27,7 @@ var arc = d3.svg.arc()
     .innerRadius(function(d) { return Math.max(0, y(d.y)); })
     .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
 
-var tooltips = d3.select(".sunburst-chart")
+var tooltips = d3.select(".sunburst-panel")
   .append("div")
   .attr("class", "tooltips")
 
@@ -36,29 +36,35 @@ var trail = d3.select(".sunburst-trail")
 function format_description(d) {
   var html = '<div class="section_name">'
   html += '<div class="tooltip-title">' + d.name  + '</div>'
-  if (d.city && d.state) {
-    html += '<div class="tooltip-location">'+ d.city + ', '+ d.state + '</div>'
-  }
-  if (d.companyType) {
-    html += '<div class="tooltip-company-type">' + d.companyType + '</div>'
-  }
+  
   if (d.companyCategory) {
-    html += '<div class="tooltip-company-category">' +d.companyCategory + '</div>'
+    html += '<div class="tooltip-company-category">' + d.companyCategory + '</div><p class="tooltip__more-info">'
   }
+
+  if (d.companyType) {
+    html += '<span class="tooltip-company-type">' + d.companyType + '</span>'
+  }
+
+  if (d.city && d.state) {
+    html += '<span class="tooltip-location">'+ d.city + ', '+ d.state + '</span>'
+  }
+
+  html += '</p>'
+
   if (d.sourceCount) {
     html+= '<div class="tooltip-source-count">' + d.sourceCount + '</div>'
   }
   if (d.usedBy_count) {
     html += '<div class="tooltip-used-by">'+ d.usedBy_count + '</div>'
   }
-  if (d.fte) {
-    html += '<div class="tooltip-fte">' + d.fte + '</div>'
-  }
-  if (d.businessModel && (d.businessModel.length !== 0)) {
-    html += '<div class="tooltip-business-model">' + d.businessModel.join(", ") + '</div>'
-  }
+  // if (d.fte) {
+  //   html += '<div class="tooltip-fte">' + d.fte + '</div>'
+  // }
+  // if (d.businessModel && (d.businessModel.length !== 0)) {
+  //   html += '<div class="tooltip-business-model">' + d.businessModel.join(", ") + '</div>'
+  // }
   if (d.subagencies && (d.subagencies.length !== 0 )) {
-    html += '<div class="tooltip-subagencies">' + d.subagencies.join(", ") + '</div>'
+    html += '<div class="tooltip-subagencies"><span>' + d.subagencies.join("</span><span>") + '</span></div>'
   }
 
   if (d.total_agencies) {
@@ -100,10 +106,10 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
     return tooltips.transition()
      .duration(50);
     })
-    // .on("mousemove", function(d) {
-    // })
-    // .on("mouseout", function(){
-    // });
+    .on("mousemove", function(d) {
+    })
+    .on("mouseout", function(){
+    });
 
      d3.selectAll("path").on("mouseleave", function() {
       // console.log("left")
