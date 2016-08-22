@@ -1,0 +1,33 @@
+  
+  .path {
+    fill: #E1E1E1;
+    stroke: #E1E1E1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .circle { 
+    cursor: pointer; 
+    fill: #a897bf; 
+    opacity: .7; 
+  }
+
+  .active { fill: #FF0000; }
+
+  .number{
+    fill:#FFF;
+    font-size:16;
+    font-family: 'Proxima-Nova', sans-serif;
+  }
+
+  div.map-tooltip {   
+    position: absolute;           
+    text-align: center;           
+    max-width: 120px;                                  
+    padding: 5px 10px;             
+    font: 12px 'Proxima-Nova', sans-serif;        
+    background: white;   
+    border: 0px;        
+    pointer-events: none; 
+    color: $black;        
+  }
