@@ -55,10 +55,10 @@ function format_description(d) {
     html += '<div class="tooltip-fte">' + d.fte + '</div>'
   }
   if (d.businessModel && (d.businessModel.length !== 0)) {
-    html += '<div class="tooltip-business-model">' + d.businessModel + '</div>'
+    html += '<div class="tooltip-business-model">' + d.businessModel.join(", ") + '</div>'
   }
-  if (d.subagencies) {
-    html += '<div class="tooltip-subagencies">' + d.subagencies.length + '</div>'
+  if (d.subagencies && (d.subagencies.length !== 0 )) {
+    html += '<div class="tooltip-subagencies">' + d.subagencies.join(", ") + '</div>'
   }
 
   if (d.total_agencies) {
