@@ -89,6 +89,10 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
           return (sequenceArray.indexOf(node) >= 0);
         })
         .attr("id","ancestor")
+        d3.selectAll("#ancestor").each(function(a) {
+          d3.select(this).classed("ancestor-" + sequenceArray.indexOf(a),"true")
+          console.log(sequenceArray.indexOf(a))
+        })
       tooltips.html(function() {
         var name = format_description(d);
         return name;
@@ -103,7 +107,11 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
 
      d3.selectAll("path").on("mouseleave", function() {
       // console.log("left")
-      d3.selectAll("#ancestor").attr("id","")
+      d3.selectAll("#ancestor")
+        .attr("id","")
+        .classed("ancestor-0",false)
+        .classed("ancestor-1",false)
+        .classed("ancestor-2",false)
       tooltips.html("")
       trail.html("")
       
