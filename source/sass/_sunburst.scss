@@ -160,6 +160,10 @@ $main-color: $blue;
   .ancestor-1 { fill: rgba($blue, .5) !important; }
   .ancestor-2 { fill: rgba($blue, .3) !important; }
 
+  #zoom-0,.zoom-0,.zoom-0:hover { fill: $main-color; !important }
+  #zoom-1,.zoom-1 { fill: rgba($blue, .7) !important; }
+  #zoom-2,.zoom-2 { fill: rgba($blue, .5) !important; }
+
   .sunburst-trail {
     display: block;
     background-color: rgba(white, .1);

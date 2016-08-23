@@ -136,7 +136,13 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   var previous;
 
   function click(d) {
-    debugger
+    console.log(getAncestors(d))
+    d3.selectAll("#ancestor")
+      .attr("id","")
+      .classed("ancestor-0",false)
+      .classed("ancestor-1",false)
+      .classed("ancestor-2",false)
+
     if (d.depth == maxDepth) {
       renderLink(d)
     } else if (d == previous) {
@@ -144,18 +150,12 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
       path.transition()
         .duration(750)
         .attrTween("d", arcTween(parent.node()))
-      // $('.layer-' + (d.depth-1) ).d3Click();
-      // var parent = d3.select(d.parent);
-        
+        previous = "";
     } else {
       previous = d;
-      var active_layer = d3.select(this).datum().depth;
-      d3.selectAll(".layer-" + active_layer)
-     .classed("active-layer", true);
-        previous = d;
-        path.transition()
-          .duration(750)
-          .attrTween("d", arcTween(d))
+      path.transition()
+        .duration(750)
+        .attrTween("d", arcTween(d))
       }
       
     }
