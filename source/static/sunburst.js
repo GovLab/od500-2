@@ -130,30 +130,26 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   }
 // END RENDERLINK
 
-  jQuery.fn.d3Click = function () {
-    this.each(function (i, e) {
-      var evt = new MouseEvent("click");
-      e.dispatchEvent(evt);
-      var evt2 = new MouseEvent("mouseover");
-      e.dispatchEvent(evt2);
-    });
-  };
+
 
   var maxDepth = 3;
   var previous;
 
   function click(d) {
+    debugger
     if (d.depth == maxDepth) {
       renderLink(d)
     } else if (d == previous) {
-      $('.layer-' + (d.depth-1) ).d3Click();
+      var parent = d3.select(d.parent)
+      path.transition()
+        .duration(750)
+        .attrTween("d", arcTween(parent.node()))
+      // $('.layer-' + (d.depth-1) ).d3Click();
       // var parent = d3.select(d.parent);
         
     } else {
       previous = d;
-      // d3.select(this).classed("id","")
       var active_layer = d3.select(this).datum().depth;
-      // console.log(active_layer);
       d3.selectAll(".layer-" + active_layer)
      .classed("active-layer", true);
         previous = d;
