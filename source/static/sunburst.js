@@ -97,7 +97,6 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
         .attr("id","ancestor")
         d3.selectAll("#ancestor").each(function(a) {
           d3.select(this).classed("ancestor-" + sequenceArray.indexOf(a),"true")
-          console.log(sequenceArray.indexOf(a))
         })
       tooltips.html(function() {
         var name = format_description(d);
@@ -131,31 +130,36 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   }
 // END RENDERLINK
 
+  jQuery.fn.d3Click = function () {
+    this.each(function (i, e) {
+      var evt = new MouseEvent("click");
+      e.dispatchEvent(evt);
+      var evt2 = new MouseEvent("mouseover");
+      e.dispatchEvent(evt2);
+    });
+  };
+
   var maxDepth = 3;
+  var previous;
 
   function click(d) {
     if (d.depth == maxDepth) {
       renderLink(d)
+    } else if (d == previous) {
+      $('.layer-' + (d.depth-1) ).d3Click();
+      // var parent = d3.select(d.parent);
+        
     } else {
+      previous = d;
+      // d3.select(this).classed("id","")
       var active_layer = d3.select(this).datum().depth;
       // console.log(active_layer);
       d3.selectAll(".layer-" + active_layer)
      .classed("active-layer", true);
+        previous = d;
         path.transition()
           .duration(750)
           .attrTween("d", arcTween(d))
-          .each("end", function(e, i) {
-              // check if the animated element's data e lies within the visible angle span given in d
-              if (e.x >= d.x && e.x < (d.x + d.dx)) {
-                // get a selection of the associated text element
-                var arcText = d3.select(this.parentNode).select("text");
-                // fade in the text element and recalculate positions
-                arcText.transition().duration(750)
-                  .attr("opacity", 1)
-                  .attr("transform", function() { return "rotate(" + computeTextRotation(e) + ")" })
-                  .attr("x", function(d) { return y(d.y); });
-              }
-          });
       }
       
     }
