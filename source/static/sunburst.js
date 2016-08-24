@@ -3,35 +3,32 @@ $(document).ready(function(){
     height = 700,
     radius = Math.min(width, height) / 2;
 
-var x = d3.scale.linear()
-    .range([0, 1 * Math.PI]);
+  var x = d3.scale.linear()
+      .range([0, 1 * Math.PI]);
 
-// var y = d3.scale.linear()
-//     .range([0, radius]);
-var y = d3.scale.sqrt()
-      .range([0, radius]);
-// var color = d3.scale.category20c();
+  var y = d3.scale.sqrt()
+        .range([0, radius]);
 
-var svg = d3.select(".sunburst-chart").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append("g")
-    .attr("transform", "translate(" + width / 2.7 + "," + (height / 2 + 10) + ")rotate(270)");
+  var svg = d3.select(".sunburst-chart").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .append("g")
+      .attr("transform", "translate(" + width / 2.7 + "," + (height / 2 + 10) + ")rotate(270)");
 
-var partition = d3.layout.partition()
-    .value(function(d) { return 1; });
+  var partition = d3.layout.partition()
+      .value(function(d) { return 1; });
 
-var arc = d3.svg.arc()
-    .startAngle(function(d) { return Math.max(0, Math.min(1 * Math.PI, x(d.x))); })
-    .endAngle(function(d) { return Math.max(0, Math.min(1 * Math.PI, x(d.x + d.dx))); })
-    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
-    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+  var arc = d3.svg.arc()
+      .startAngle(function(d) { return Math.max(0, Math.min(1 * Math.PI, x(d.x))); })
+      .endAngle(function(d) { return Math.max(0, Math.min(1 * Math.PI, x(d.x + d.dx))); })
+      .innerRadius(function(d) { return Math.max(0, y(d.y)); })
+      .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
 
-var tooltips = d3.select(".sunburst-panel")
-  .append("div")
-  .attr("class", "tooltips")
+  var tooltips = d3.select(".sunburst-panel")
+    .append("div")
+    .attr("class", "tooltips")
 
-var trail = d3.select(".sunburst-trail")
+  var trail = d3.select(".sunburst-trail")
 
 function format_description(d) {
   var html = '<div class="section_name">'
@@ -124,40 +121,48 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
       })
   }
 
-// REPLACE WITH ACTUAL LINKS
+
   function renderLink(d) {
     window.location = "list-page.html";
     return
   }
-// END RENDERLINK
 
+  $('.layer-0').on("click", function() {
+      zoom = false;
+  })
 
-$('.layer-0').on("click", function() {
-    zoom = false;
-})
-
-function clearAncestorsPath() {
-  // zoom = false;
-  d3.selectAll("#ancestor")
-    .attr("id","")
-    .classed("ancestor-0",false)
-    .classed("ancestor-1",false)
-    .classed("ancestor-2",false)
-}
+  function clearAncestorsPath() {
+    d3.selectAll("#ancestor")
+      .attr("id","")
+      .classed("ancestor-0",false)
+      .classed("ancestor-1",false)
+      .classed("ancestor-2",false)
+  }
 
   var maxDepth = 3;
   var previous;
   var zoom = false;
 
   function click(d) {
-    d3.select(".current_root").classed("current_root",false)
-    d3.select(this).classed("current_root",true)
     zoom = true
+    d3.selectAll(".current_root").classed("current_root",false)
+    d3.select(this).classed("current_root",true)
+    var sequence = getAncestors(d)
+    d3.selectAll("path")
+      .filter(function(node){
+        return sequence.indexOf(node) == 0;
+      })
+      .classed("current_root",true)
     if (d.depth == maxDepth) {
       renderLink(d)
     } else if (d == previous) {
       zoom = false
-      d3.select(".current_root").classed("current_root",false)
+      d3.selectAll("path")
+        .filter(function(node){
+          return sequence.indexOf(node) == 0;
+        })
+        .classed("current_root",true)
+      d3.select(this).classed("current_root",false)
       var parent = d3.select(d.parent)
       path.transition()
         .duration(750)
@@ -169,45 +174,43 @@ function clearAncestorsPath() {
         .duration(750)
         .attrTween("d", arcTween(d))
       }
-      
     }
 });
 
 d3.select(self.frameElement).style("height", height + "px");
 
-function getAncestors(node) {
-  var path = [];
-  var current = node;
-  while (current.parent) {
-    path.unshift(current);
-    current = current.parent;
+  function getAncestors(node) {
+    var path = [];
+    var current = node;
+    while (current.parent) {
+      path.unshift(current);
+      current = current.parent;
+      }
+    return path;
+    }
+
+  function updateBreadcrumbs(nodeArray) {
+    d3.selectAll("#ancestor").attr("id","")
   }
-  return path;
-}
 
-function updateBreadcrumbs(nodeArray) {
-  d3.selectAll("#ancestor").attr("id","")
-}
-
-function formatTrail(array) {
-  var html = ""
-  array.forEach(function(item){
-    html += '<span class="trail-item">' + item.name  + '</span>'
-  })
-
-  return html;
-}
+  function formatTrail(array) {
+    var html = ""
+    array.forEach(function(item){
+      html += '<span class="trail-item">' + item.name  + '</span>'
+    })
+    return html;
+  }
 // Interpolate the scales!
-function arcTween(d) {
-  var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
-      yd = d3.interpolate(y.domain(), [d.y, 1]),
-      yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
-  return function(d, i) {
-    return i
-        ? function(t) { return arc(d); }
-        : function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
-  };
-}
+  function arcTween(d) {
+    var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+        yd = d3.interpolate(y.domain(), [d.y, 1]),
+        yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+    return function(d, i) {
+      return i
+          ? function(t) { return arc(d); }
+          : function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
+    };
+  }
 
 // function computeTextRotation(d) {
 //   return (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180;
