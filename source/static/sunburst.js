@@ -30,49 +30,49 @@ $(document).ready(function(){
 
   var trail = d3.select(".sunburst-trail")
 
-function format_description(d) {
-  var html = '<div class="section_name">'
-  html += '<div class="tooltip-title">' + d.name  + '</div>'
-  
-  if (d.companyCategory) {
-    html += '<div class="tooltip-company-category">' + d.companyCategory + '</div><p class="tooltip__more-info">'
-  }
+  function format_description(d) {
+    var html = '<div class="section_name">'
+    html += '<div class="tooltip-title">' + d.name  + '</div>'
+    
+    if (d.companyCategory) {
+      html += '<div class="tooltip-company-category">' + d.companyCategory + '</div><p class="tooltip__more-info">'
+    }
 
-  if (d.companyType) {
-    html += '<span class="tooltip-company-type">' + d.companyType + '</span>'
-  }
+    if (d.companyType) {
+      html += '<span class="tooltip-company-type">' + d.companyType + '</span>'
+    }
 
-  if (d.city && d.state) {
-    html += '<span class="tooltip-location">'+ d.city + ', '+ d.state + '</span>'
-  }
+    if (d.city && d.state) {
+      html += '<span class="tooltip-location">'+ d.city + ', '+ d.state + '</span>'
+    }
 
-  html += '</p>'
+    html += '</p>'
 
-  if (d.sourceCount) {
-    html+= '<div class="tooltip-source-count">' + d.sourceCount + '</div>'
-  }
-  if (d.usedBy_count) {
-    html += '<div class="tooltip-used-by">'+ d.usedBy_count + '</div>'
-  }
-  // if (d.fte) {
-  //   html += '<div class="tooltip-fte">' + d.fte + '</div>'
-  // }
-  // if (d.businessModel && (d.businessModel.length !== 0)) {
-  //   html += '<div class="tooltip-business-model">' + d.businessModel.join(", ") + '</div>'
-  // }
-  if (d.subagencies && (d.subagencies.length !== 0 )) {
-    html += '<div class="tooltip-subagencies"><span>' + d.subagencies.join("</span><span>") + '</span></div>'
-  }
+    if (d.sourceCount) {
+      html+= '<div class="tooltip-source-count">' + d.sourceCount + '</div>'
+    }
+    if (d.usedBy_count) {
+      html += '<div class="tooltip-used-by">'+ d.usedBy_count + '</div>'
+    }
+    // if (d.fte) {
+    //   html += '<div class="tooltip-fte">' + d.fte + '</div>'
+    // }
+    // if (d.businessModel && (d.businessModel.length !== 0)) {
+    //   html += '<div class="tooltip-business-model">' + d.businessModel.join(", ") + '</div>'
+    // }
+    if (d.subagencies && (d.subagencies.length !== 0 )) {
+      html += '<div class="tooltip-subagencies"><span>' + d.subagencies.join("</span><span>") + '</span></div>'
+    }
 
-  if (d.total_agencies) {
-    html += '<div class="tooltip-total-agencies">' + d.total_agencies + '</div>'
+    if (d.total_agencies) {
+      html += '<div class="tooltip-total-agencies">' + d.total_agencies + '</div>'
+    }
+    if (d.total_companies) {
+      html += '<div class="tooltip-total-companies">' + d.total_companies + '</div>'
+    }
+    html += '</div>'
+    return  html;
   }
-  if (d.total_companies) {
-    html += '<div class="tooltip-total-companies">' + d.total_companies + '</div>'
-  }
-  html += '</div>'
-  return  html;
-}
 
 d3.json("sunburst-no-data-new.json", function(error, root) {
   var g = svg.selectAll("g")
@@ -140,10 +140,13 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   }
 
   var maxDepth = 3;
-  var previous;
+  var previous = '';
   var zoom = false;
 
   function click(d) {
+    // console.log(previous)
+    // console.log(d)
+    console.log(getAncestors(previous).indexOf(d))
     zoom = true
     d3.selectAll(".current_root").classed("current_root",false)
     d3.select(this).classed("current_root",true)
@@ -155,7 +158,7 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
       .classed("current_root",true)
     if (d.depth == maxDepth) {
       renderLink(d)
-    } else if (d == previous) {
+    } else if (d == previous || (getAncestors(previous).indexOf(d) == 0)) {
       zoom = false
       d3.selectAll("path")
         .filter(function(node){
@@ -167,7 +170,7 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
       path.transition()
         .duration(750)
         .attrTween("d", arcTween(parent.node()))
-        previous = "";
+
     } else {
       previous = d;
       path.transition()
