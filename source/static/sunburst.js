@@ -106,11 +106,11 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
 
   function highlightSequence(d) {
     var sequenceArray = getAncestors(d);
+    updateBreadcrumbs(sequenceArray);
+    trail.html(formatTrail(sequenceArray))
     if (zoom) {
       sequenceArray.splice(d,1)
     }
-    updateBreadcrumbs(sequenceArray);
-    trail.html(formatTrail(sequenceArray))
     d3.selectAll("path")
       .filter(function(node) {
         return (sequenceArray.indexOf(node) >= 0);
