@@ -87,17 +87,23 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
     .attr("class", function(d) { return "layer-" + d.depth } )
     .on("click", click)
     .on("mouseover", function(d) {
-      var sequenceArray = getAncestors(d);
-      updateBreadcrumbs(sequenceArray);
-      trail.html(formatTrail(sequenceArray))
-      d3.selectAll("path")
-        .filter(function(node) {
-          return (sequenceArray.indexOf(node) >= 0);
-        })
-        .attr("id","ancestor")
-        d3.selectAll("#ancestor").each(function(a) {
-          d3.select(this).classed("ancestor-" + sequenceArray.indexOf(a),"true")
-        })
+
+          highlightSequence(d)
+
+        // zoomAncestors(d)
+      
+        // var sequenceArray = getAncestors(d);
+        // console.log(sequenceArray);
+        // updateBreadcrumbs(sequenceArray);
+        // trail.html(formatTrail(sequenceArray))
+        // d3.selectAll("path")
+        //   .filter(function(node) {
+        //     return (sequenceArray.indexOf(node) >= 0);
+        //   })
+        //   .attr("id","ancestor")
+        //   d3.selectAll("#ancestor").each(function(a) {
+        //     d3.select(this).classed("ancestor-" + sequenceArray.indexOf(a),"true")
+        //   })
       tooltips.html(function() {
         var name = format_description(d);
         return name;
@@ -105,24 +111,40 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
     return tooltips.transition()
      .duration(50);
     })
+
     .on("mousemove", function(d) {
     })
     .on("mouseout", function(){
     });
 
      d3.selectAll("path").on("mouseleave", function() {
-      // console.log("left")
-      d3.selectAll("#ancestor")
-        .attr("id","")
-        .classed("ancestor-0",false)
-        .classed("ancestor-1",false)
-        .classed("ancestor-2",false)
+      clearAncestorsPath()
       tooltips.html("")
       trail.html("")
-      
 
      });
-     
+
+  function highlightSequence(d) {
+    var sequenceArray = getAncestors(d);
+    // console.log(d)
+    // console.log("old",sequenceArray)
+    // sequenceArray.splice(sequenceArray.indexOf(d),1)
+    // console.log("new",sequenceArray)
+    if (zoom) {
+      sequenceArray.splice(d,1)
+    }
+    updateBreadcrumbs(sequenceArray);
+    trail.html(formatTrail(sequenceArray))
+    d3.selectAll("path")
+      .filter(function(node) {
+        return (sequenceArray.indexOf(node) >= 0);
+      })
+      .attr("id","ancestor")
+      d3.selectAll("#ancestor").each(function(a) {
+        d3.select(this).classed("ancestor-" + sequenceArray.indexOf(a),"true")
+      })
+  }
+
 // REPLACE WITH ACTUAL LINKS
   function renderLink(d) {
     window.location = "list-page.html";
@@ -130,22 +152,45 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   }
 // END RENDERLINK
 
+// function zoomAncestors(sequence) {
+//   d3.selectAll("path")
+//     .filter(function(node) {
+//       return (sequence.indexOf(node) >= 0);
+//     })
+//     .attr("id","ancestor")
+//     d3.selectAll("#ancestor").each(function(a, i) {
+//       if (sequence.indexOf(a) == 0) {
+//         console.log(a)
+//       } else
+//       d3.select(this).classed("ancestor-" + sequence.indexOf(a),"true")
+//     })
 
+// }
+
+function clearAncestorsPath() {
+  // zoom = false;
+  d3.selectAll("#ancestor")
+    .attr("id","")
+    .classed("ancestor-0",false)
+    .classed("ancestor-1",false)
+    .classed("ancestor-2",false)
+}
 
   var maxDepth = 3;
   var previous;
+  var zoom = false;
 
   function click(d) {
+    d3.select(".current_root").classed("current_root",false)
+    d3.select(this).classed("current_root",true)
+    // d3.select(d).attr("id","ancestor")
     console.log(getAncestors(d))
-    d3.selectAll("#ancestor")
-      .attr("id","")
-      .classed("ancestor-0",false)
-      .classed("ancestor-1",false)
-      .classed("ancestor-2",false)
-
+    // zoomAncestors(getAncestors(d))
+    zoom = true
     if (d.depth == maxDepth) {
       renderLink(d)
     } else if (d == previous) {
+      d3.select(".current_root").classed("current_root",false)
       var parent = d3.select(d.parent)
       path.transition()
         .duration(750)
