@@ -87,23 +87,7 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
     .attr("class", function(d) { return "layer-" + d.depth } )
     .on("click", click)
     .on("mouseover", function(d) {
-
-          highlightSequence(d)
-
-        // zoomAncestors(d)
-      
-        // var sequenceArray = getAncestors(d);
-        // console.log(sequenceArray);
-        // updateBreadcrumbs(sequenceArray);
-        // trail.html(formatTrail(sequenceArray))
-        // d3.selectAll("path")
-        //   .filter(function(node) {
-        //     return (sequenceArray.indexOf(node) >= 0);
-        //   })
-        //   .attr("id","ancestor")
-        //   d3.selectAll("#ancestor").each(function(a) {
-        //     d3.select(this).classed("ancestor-" + sequenceArray.indexOf(a),"true")
-        //   })
+      highlightSequence(d)
       tooltips.html(function() {
         var name = format_description(d);
         return name;
@@ -111,25 +95,20 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
     return tooltips.transition()
      .duration(50);
     })
-
     .on("mousemove", function(d) {
     })
     .on("mouseout", function(){
     });
 
-     d3.selectAll("path").on("mouseleave", function() {
-      clearAncestorsPath()
-      tooltips.html("")
-      trail.html("")
+  d3.selectAll("path").on("mouseleave", function() {
+    clearAncestorsPath()
+    tooltips.html("")
+    trail.html("")
 
-     });
+  });
 
   function highlightSequence(d) {
     var sequenceArray = getAncestors(d);
-    // console.log(d)
-    // console.log("old",sequenceArray)
-    // sequenceArray.splice(sequenceArray.indexOf(d),1)
-    // console.log("new",sequenceArray)
     if (zoom) {
       sequenceArray.splice(d,1)
     }
@@ -152,20 +131,10 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   }
 // END RENDERLINK
 
-// function zoomAncestors(sequence) {
-//   d3.selectAll("path")
-//     .filter(function(node) {
-//       return (sequence.indexOf(node) >= 0);
-//     })
-//     .attr("id","ancestor")
-//     d3.selectAll("#ancestor").each(function(a, i) {
-//       if (sequence.indexOf(a) == 0) {
-//         console.log(a)
-//       } else
-//       d3.select(this).classed("ancestor-" + sequence.indexOf(a),"true")
-//     })
 
-// }
+$('.layer-0').on("click", function() {
+    zoom = false;
+})
 
 function clearAncestorsPath() {
   // zoom = false;
@@ -183,13 +152,11 @@ function clearAncestorsPath() {
   function click(d) {
     d3.select(".current_root").classed("current_root",false)
     d3.select(this).classed("current_root",true)
-    // d3.select(d).attr("id","ancestor")
-    console.log(getAncestors(d))
-    // zoomAncestors(getAncestors(d))
     zoom = true
     if (d.depth == maxDepth) {
       renderLink(d)
     } else if (d == previous) {
+      zoom = false
       d3.select(".current_root").classed("current_root",false)
       var parent = d3.select(d.parent)
       path.transition()
