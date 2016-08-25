@@ -105,20 +105,17 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   });
 
   function highlightSequence(d) {
-    var sequenceArray = getAncestors(d);
+    var sequenceArray = getAncestors(d)
     updateBreadcrumbs(sequenceArray);
-    trail.html(formatTrail(sequenceArray))
-    if (zoom) {
-      sequenceArray.splice(d,1)
-    }
+    trail.html(formatTrail(sequenceArray));
     d3.selectAll("path")
       .filter(function(node) {
         return (sequenceArray.indexOf(node) >= 0);
       })
-      .attr("id","ancestor")
-      d3.selectAll("#ancestor").each(function(a) {
-        d3.select(this).classed("ancestor-" + sequenceArray.indexOf(a),"true")
-      })
+      .classed("ancestor", true)
+      d3.selectAll(".ancestor").each(function(a,i) {
+        d3.select(this).classed("ancestor-" + (i - zoomLevel),"true");
+      });
   }
 
 
@@ -132,8 +129,8 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   })
  
   function clearAncestorsPath() {
-    d3.selectAll("#ancestor")
-      .attr("id","")
+    d3.selectAll(".ancestor")
+      .classed("ancestor",false)
       .classed("ancestor-0",false)
       .classed("ancestor-1",false)
       .classed("ancestor-2",false)
@@ -142,16 +139,18 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   var maxDepth = 3;
   var previous = '';
   var zoom = false;
+  var zoomLevel = 0;
 
   function click(d) {
     zoom = true
+    zoomLevel = d.depth
     if (d3.select(this).classed("current_root")) {
+      zoomLevel -= 1
       var parent = d3.select(d.parent)
       path.transition()
         .duration(750)
         .attrTween("d", arcTween(parent.node()))
       d3.select(this).classed("current_root",false)
-      zoom = false
     } else {
       d3.selectAll(".current_root").classed("current_root",false)
       d3.select(this).classed("current_root",true)
@@ -180,12 +179,7 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
           .duration(750)
           .attrTween("d", arcTween(parent.node()))
         previous = ''
-      } else {
-        path.transition()
-          .duration(750)
-          .attrTween("d", arcTween(d))
-        previous = d;
-        }
+        } 
       }
     }
 });
