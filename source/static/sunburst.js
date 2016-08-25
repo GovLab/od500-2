@@ -130,7 +130,7 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   $('.layer-0').on("click", function() {
       zoom = false;
   })
-
+ 
   function clearAncestorsPath() {
     d3.selectAll("#ancestor")
       .attr("id","")
@@ -143,42 +143,72 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
   var previous = '';
   var zoom = false;
 
+  // if (d3.select(this).classed("current_root")) {
+  //   console.log("yo")
+  //   var parent = d3.select(d.parent)
+  //   console.log(parent)
+  //   path.transition()
+  //     .duration(750)
+  //     .attrTween("d", arcTween(parent.node()))
+  //   d3.select(this).classed("current_root",false)
+  // }
   function click(d) {
-    // console.log(previous)
-    // console.log(d)
-    console.log(getAncestors(previous).indexOf(d))
-    zoom = true
-    d3.selectAll(".current_root").classed("current_root",false)
-    d3.select(this).classed("current_root",true)
-    var sequence = getAncestors(d)
-    d3.selectAll("path")
-      .filter(function(node){
-        return sequence.indexOf(node) == 0;
-      })
-      .classed("current_root",true)
-    if (d.depth == maxDepth) {
-      renderLink(d)
-    } else if (d == previous || (getAncestors(previous).indexOf(d) == 0)) {
-      zoom = false
+    if (d3.select(this).classed("current_root")) {
+      console.log("yo")
+      var parent = d3.select(d.parent)
+      // console.log(parent)
+      path.transition()
+        .duration(750)
+        .attrTween("d", arcTween(parent.node()))
+      d3.select(this).classed("current_root",false)
+    } else {
+
+      zoom = true
+      d3.selectAll(".current_root").classed("current_root",false)
+      d3.select(this).classed("current_root",true)
+      var sequence = getAncestors(d)
       d3.selectAll("path")
         .filter(function(node){
           return sequence.indexOf(node) == 0;
         })
         .classed("current_root",true)
-      d3.select(this).classed("current_root",false)
-      var parent = d3.select(d.parent)
-      path.transition()
-        .duration(750)
-        .attrTween("d", arcTween(parent.node()))
-
-    } else {
-      previous = d;
-      path.transition()
-        .duration(750)
-        .attrTween("d", arcTween(d))
+      if (d.depth == maxDepth) {
+        renderLink(d)
+      } else if (previous = d){
+        path.transition()
+          .duration(750)
+          .attrTween("d", arcTween(d))
+        previous = d;
+      } else if ((getAncestors(previous).indexOf(d) >=  0)) {
+        zoom = false
+        d3.selectAll("path")
+          .filter(function(node){
+            return sequence.indexOf(node) == 0;
+          })
+          .classed("current_root",true)
+        d3.select(this).classed("current_root",false)
+        var parent = d3.select(d.parent)
+        path.transition()
+          .duration(750)
+          .attrTween("d", arcTween(parent.node()))
+        previous = ''
+      } else {
+        path.transition()
+          .duration(750)
+          .attrTween("d", arcTween(d))
+        previous = d;
+        }
       }
     }
+    
 });
+
+
+// if current node is clicked, activate parent
+// d3.select(".current_root").on("click", function() {
+//   console.log("den")
+  
+// })
 
 d3.select(self.frameElement).style("height", height + "px");
 
