@@ -1,4 +1,4 @@
-.DS_Store
 /public
 /.publish
 /node_modules
+.DS_Store

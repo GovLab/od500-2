@@ -1,0 +1,184 @@
+// // colors
+$purple: #523080;
+$gray: rgba(black, .1);
+$blue: #008ab3;
+$main-color: $blue;
+
+.sunburst-panel {
+  background-color: $main-color;
+  height: 368px;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  z-index: 11;
+  top: 380px;
+}
+
+#sunburst-vizz {
+  position: relative;
+  font-family: $main-font;
+
+  .sunburst-chart {
+    position: relative;
+    width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .sunburst-trail {
+    position: relative;
+    text-align: center;
+  }
+
+
+  svg {
+    path { fill-rule: evenodd; }
+    g { 
+      .layer-0 { fill: $blue};
+      .layer-1 { fill: rgba(black, .15)};
+      .layer-2 { fill: rgba(black, .10)};
+      .layer-3 { fill: rgba(black, .05)};
+
+      .layer-0 { fill: rgba($main-color, 1); }
+      
+      .layer-1 {
+        &:nth-child(even) {fill: rgba(black, 1);}
+        &:hover {fill: rgba($main-color, .5);}
+      }
+      
+      .layer-2 {
+        &:nth-child(even) {fill: rgba(black, .15);}
+        &:hover {fill: rgba($main-color, .5);}
+      }
+      
+      .layer-3 {
+        &:nth-child(even) {fill: rgba(black, .1);}
+        &:hover {fill: rgba($main-color, .5);}
+      }
+    }
+  }
+
+  .tooltips {
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    width: 100%;
+  }
+
+  // All Tooltips
+  .tooltip-title {
+    margin-top: 30px;
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  .tooltip-total-companies,
+  .tooltip-source-count,
+  .tooltip-used-by {
+    position: absolute;
+    top: -125px;
+    font-size: 6rem;
+    line-height: 1;
+    font-weight: 100;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    pointer-events: none;
+    cursor: default;
+
+    &:after { 
+      display: block;
+      content:"Sources Used";
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: rgba(white, .5);
+    }
+  }
+
+  .tooltip-total-agencies {
+    font-size: 5rem;
+    font-weight: 100;
+    line-height: 1;
+    margin-top: 10px;
+    
+    &:after { 
+      content:"Agencies";
+      font-size: 1rem;
+      display: block;
+    }
+  }
+
+  .tooltip-total-companies:after { content:"Companies"; }
+  .tooltip-used-by:after { content: "Companies"; }
+
+  // Layer 3
+
+  .tooltip__more-info {
+    font-size: .9rem;
+    font-weight: 100;
+    text-transform: capitalize;
+
+    span {
+      font-style: normal;
+      font-weight: 600;
+    } 
+  }
+
+  .tooltip-location:before { 
+      content:" in ";
+      font-style: italic;
+      font-weight: 400;
+  }
+  
+  .tooltip-company-category { color: rgba(white, .5); }
+  .tooltip-company-type:after { content:" Company"; }
+
+  .tooltip-subagencies {
+    font-weight: 400;
+    text-transform: capitalize;
+    width: 800px;
+    margin: 0 auto;
+
+    span {
+      background-color: rgba(white, .1);
+      margin: 2px;
+      padding: 2px 5px;
+      display: inline-block;
+      font-weight: 400;
+    }
+
+    &:before { 
+      content:"Subagencies"; 
+      display: block;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+  }
+
+  .section_name { font-weight: 700; }
+  #ancestor { fill: $main-color; }
+  .ancestor-0 { fill: rgba($blue, .7) !important; }
+  .ancestor-1 { fill: rgba($blue, .5) !important; }
+  .ancestor-2 { fill: rgba($blue, .3) !important; }
+
+
+  .sunburst-trail {
+    display: block;
+    background-color: rgba(white, .1);
+    text-align: center;
+    color: $white;
+    padding: 0;
+    margin: 0;
+  }
+
+  .trail-item {
+    display: inline-block;
+    padding: 2px 5px;
+    margin: 5px 0 5px 4px;
+    background-color: rgba(white, .1);
+
+    &:last-of-type { display: none; }
+  }
+
+  .current_root {fill: $main-color !important;}
+
+}

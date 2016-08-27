@@ -1,4 +1,4 @@
-@import 'styleguide/styleguide.scss';
+@import './styleguide/styleguide.scss';
 
 
 // context variables
@@ -18,10 +18,6 @@ $accent-color: $orange;
 @import 'subscribe';
 
 
-
-
 @import 'custom';
 @import 'map';
-
-
-
+@import 'sunburst';

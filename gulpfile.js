@@ -58,18 +58,10 @@ gulp.task('csv', function () {
     .pipe(gulp.dest('public'));
 });
 
-// Nunjucks
-// gulp.task('nunjucks', function () {
-//   nunjucksRender.nunjucks.configure(['source/templates/']);
-
-//   // Gets .html and .nunjucks files in pages
-//   return gulp.src('source/templates/**/[^_]*.html')
-//     // Renders template with nunjucks
-//     .pipe(nunjucksRender({ path: 'source/templates' }))
-//     // output files in app folder
-//     .pipe(gulp.dest('public'))
-//     .pipe(browserSync.reload({ stream: true }));
-// });
+gulp.task('json', function () {
+  return gulp.src('source/static/**/*.json')
+    .pipe(gulp.dest('public'));
+});
 
 gulp.task('nunjucks', function() {
   return gulp.src('source/templates/**/*.+(html|nunjucks)')
@@ -112,7 +104,7 @@ gulp.task('watch', function () {
 gulp.task('default', function (callback) {
   runSequence(
     'clean',
-    ['sass', 'js', 'csv', 'image', 'nunjucks', 'vendor'],
+    ['sass', 'js', 'csv', 'json' 'image', 'nunjucks', 'vendor'],
     ['browserSync', 'watch'],
     callback
   );
