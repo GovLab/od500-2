@@ -92,13 +92,7 @@ $(document).ready(function () {
     });
 
 
-    // Fixed Table Header
-    $(window).scroll(function(){
-        var yPosition = $( window ).scrollTop(),
-            target = $('.table-sortable'),
-            offset = target.offset().top;
-        yPosition >= offset ? target.addClass("table-sortable--fixed") : target.removeClass("table-sortable--fixed");
-    });
+
 
 
     // List.js Implementation

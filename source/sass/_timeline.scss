@@ -54,14 +54,6 @@
     }
   }
 
-  // TODO - Make a solution for default value hidden while hovering, 
-  // and fallback on mouse out
-  // &--active-4 li:nth-child(5) { 
-  //   color: rgba($white, 1); 
-  //   padding-top: 3%;
-  //   padding-bottom: 5%;
-  // }
-
   &--active-0:after { left: 20px; }
   &--active-1:after { left: calc(20% + 20px); }
   &--active-2:after { left: calc(40% + 20px); }
