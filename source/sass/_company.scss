@@ -6,12 +6,29 @@
   th:first-child,
   td:first-child { width: 50px; }
 
-  &__name        { width: 640px; }
-  &__category    { width: 320px; }
-  &__type        { width: 220px; }
-  &__founded     { width: 200px; }
-  &__location    { width: 300px; }
-  &__last-update { width: 180px; }
+  // &__name        { width: 640px; }
+  // &__category    { width: 320px; }
+  // &__type        { width: 220px; }
+  // &__founded     { width: 200px; }
+  // &__location    { width: 300px; }
+  // &__last-update { width: 180px; }
+
+  &__name        {  }
+  &__category    { min-width: 200px; 
+      @include breakpoint(max-width 500px) { display: none; }
+  }
+  &__type        { width: 120px;
+      @include breakpoint(max-width 870px) { display: none; }
+  }
+  &__founded     { width: 150px; 
+    @include breakpoint(max-width 1200px) { display: none; }
+  }
+  &__location    { min-width: 200px;
+      @include breakpoint(max-width 740px) { display: none; }
+  }
+  &__last-update { width: 180px; 
+    @include breakpoint(max-width 1050px) { display: none; }
+  }
 
   &:hover {
     background-color: rgba($black, .1);
