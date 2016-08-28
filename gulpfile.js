@@ -104,7 +104,7 @@ gulp.task('watch', function () {
 gulp.task('default', function (callback) {
   runSequence(
     'clean',
-    ['sass', 'js', 'csv', 'json', 'image', 'nunjucks', 'vendor'],
+    ['sass', 'js', 'json', 'image', 'nunjucks', 'vendor'],
     ['browserSync', 'watch'],
     callback
   );

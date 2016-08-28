@@ -1,10 +1,10 @@
 $(document).ready(function(){
-  var width = 960,
+  var width = 700,
     height = 700,
     radius = Math.min(width, height) / 2;
 
   var x = d3.scale.linear()
-      .range([0, 1 * Math.PI]);
+      .range([0, 2 * Math.PI]);
 
   var y = d3.scale.sqrt()
         .range([0, radius]);
@@ -13,14 +13,14 @@ $(document).ready(function(){
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + width / 2.7 + "," + (height / 2 + 10) + ")rotate(270)");
+      .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")rotate(-45)");
 
   var partition = d3.layout.partition()
       .value(function(d) { return 1; });
 
   var arc = d3.svg.arc()
-      .startAngle(function(d) { return Math.max(0, Math.min(1 * Math.PI, x(d.x))); })
-      .endAngle(function(d) { return Math.max(0, Math.min(1 * Math.PI, x(d.x + d.dx))); })
+      .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+      .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
       .innerRadius(function(d) { return Math.max(0, y(d.y)); })
       .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
 
@@ -31,7 +31,23 @@ $(document).ready(function(){
   var trail = d3.select(".sunburst-trail")
 
   function format_description(d) {
-    var html = '<div class="section_name">'
+    var html = '<div class="center-info">'
+    if (d.usedBy_count) {
+      html += '<div class="tooltip-used-by">'+ d.usedBy_count + '</div>'
+    }
+    if (d.sourceCount) {
+      html+= '<div class="tooltip-source-count">' + d.sourceCount + '</div>'
+    }
+    if (d.total_agencies) {
+      html += '<div class="tooltip-total-agencies">' + d.total_agencies + '</div>'
+    }
+    if (d.total_companies) {
+      html += '<div class="tooltip-total-companies">' + d.total_companies + '</div>'
+    }
+
+    html += '</div><div class="side-info">'
+
+
     html += '<div class="tooltip-title">' + d.name  + '</div>'
     
     if (d.companyCategory) {
@@ -48,12 +64,8 @@ $(document).ready(function(){
 
     html += '</p>'
 
-    if (d.sourceCount) {
-      html+= '<div class="tooltip-source-count">' + d.sourceCount + '</div>'
-    }
-    if (d.usedBy_count) {
-      html += '<div class="tooltip-used-by">'+ d.usedBy_count + '</div>'
-    }
+    
+    
     // if (d.fte) {
     //   html += '<div class="tooltip-fte">' + d.fte + '</div>'
     // }
@@ -64,13 +76,8 @@ $(document).ready(function(){
       html += '<div class="tooltip-subagencies"><span>' + d.subagencies.join("</span><span>") + '</span></div>'
     }
 
-    if (d.total_agencies) {
-      html += '<div class="tooltip-total-agencies">' + d.total_agencies + '</div>'
-    }
-    if (d.total_companies) {
-      html += '<div class="tooltip-total-companies">' + d.total_companies + '</div>'
-    }
-    html += '</div>'
+    
+    html += '</div></div>'
     return  html;
   }
 
@@ -101,7 +108,6 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
     clearAncestorsPath()
     tooltips.html("")
     trail.html("")
-
   });
 
   function highlightSequence(d) {

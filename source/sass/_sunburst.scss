@@ -1,116 +1,120 @@
-// // colors
-$purple: #523080;
-$gray: rgba(black, .1);
-$blue: #008ab3;
-$main-color: $blue;
+
 
 .sunburst-panel {
-  background-color: $main-color;
-  height: 368px;
-  width: 100vw;
-  position: absolute;
-  left: 0;
-  z-index: 11;
-  top: 380px;
 }
 
 #sunburst-vizz {
   position: relative;
-  font-family: $main-font;
 
-  .sunburst-chart {
-    position: relative;
-    width: 700px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .sunburst-trail {
-    position: relative;
-    text-align: center;
+  .sunburst-wrapper { 
+    transform: translate(0);
+    transition: transform .5s ease;
   }
 
+  &:hover .sunburst-wrapper {
+    transform: translate(-300px);
+    transition: transform .5s ease;
+  }
 
-  svg {
-    path { fill-rule: evenodd; }
-    g { 
-      .layer-0 { fill: $blue};
-      .layer-1 { fill: rgba(black, .15)};
-      .layer-2 { fill: rgba(black, .10)};
-      .layer-3 { fill: rgba(black, .05)};
+  .sunburst-panel {
+    pointer-events: none;
+    width: 300px;
+    position: absolute;
+    top: 250px;
+    left: 200px;
+  }
 
-      .layer-0 { fill: rgba($main-color, 1); }
-      
-      .layer-1 {
-        &:nth-child(even) {fill: rgba(black, 1);}
-        &:hover {fill: rgba($main-color, .5);}
-      }
-      
-      .layer-2 {
-        &:nth-child(even) {fill: rgba(black, .15);}
-        &:hover {fill: rgba($main-color, .5);}
-      }
-      
-      .layer-3 {
-        &:nth-child(even) {fill: rgba(black, .1);}
-        &:hover {fill: rgba($main-color, .5);}
-      }
+  .sunburst__side-panel {
+    position: fixed;
+    background-color: darken($theme-pink, 20);
+    padding: 120px 50px;
+    height: 100vh;
+    width: 400px;
+    top: 0;
+    left: -420px;
+    box-shadow: 3px 3px 15px rgba(black, .8);
+    transition: all .5s ease;
+
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.4rem; }
+    p { font-size: 1.1rem; }
+  }
+
+  &:hover {
+    // temp styles. Will need some JS to make it work properly
+    // this hover behavior should work only when hovered over the sunburt chart
+    .sunburst__side-panel {
+      left: 0;
+      transition: all .5s ease; 
     }
   }
 
   .tooltips {
     text-align: center;
     text-transform: uppercase;
-    color: white;
-    width: 100%;
+    color: $theme-purple;
+    width: 300px;
+    margin: 0 auto;
+    color: $theme-purple;
+    
+  }
+
+  .center-info {
+    align-self: center;
+  }
+
+  .side-info {
+    display: none;
   }
 
   // All Tooltips
   .tooltip-title {
-    margin-top: 30px;
     font-size: 1.5rem;
     font-weight: 400;
+    display: none;
   }
 
+  .tooltip-total-agencies,
   .tooltip-total-companies,
   .tooltip-source-count,
   .tooltip-used-by {
-    position: absolute;
-    top: -125px;
-    font-size: 6rem;
+    font-size: 3rem;
     line-height: 1;
     font-weight: 100;
-    width: 100%;
     display: block;
-    margin: 0 auto;
     pointer-events: none;
     cursor: default;
+    text-align: center;
+
 
     &:after { 
       display: block;
       content:"Sources Used";
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 400;
-      color: rgba(white, .5);
     }
   }
 
   .tooltip-total-agencies {
-    font-size: 5rem;
-    font-weight: 100;
+    font-size: 4rem;
+    font-weight: 200;
     line-height: 1;
-    margin-top: 10px;
     
     &:after { 
       content:"Agencies";
       font-size: 1rem;
+      font-weight: 400;
       display: block;
+      margin-bottom: 20px;
     }
   }
 
   .tooltip-total-companies:after { content:"Companies"; }
   .tooltip-used-by:after { content: "Companies"; }
 
-  // Layer 3
+
+
+  // // Layer 3
 
   .tooltip__more-info {
     font-size: .9rem;
@@ -135,8 +139,6 @@ $main-color: $blue;
   .tooltip-subagencies {
     font-weight: 400;
     text-transform: capitalize;
-    width: 800px;
-    margin: 0 auto;
 
     span {
       background-color: rgba(white, .1);
@@ -155,17 +157,15 @@ $main-color: $blue;
   }
 
   .section_name { font-weight: 700; }
-  #ancestor { fill: $main-color; }
-  .ancestor-0 { fill: rgba($blue, .7) !important; }
-  .ancestor-1 { fill: rgba($blue, .5) !important; }
-  .ancestor-2 { fill: rgba($blue, .3) !important; }
+  #ancestor { fill: $theme-pink; }
+  .ancestor-0 { fill: rgba($theme-pink, 1) !important; }
+  .ancestor-1 { fill: rgba($theme-pink, 1) !important; }
+  .ancestor-2 { fill: rgba($theme-pink, 1) !important; }
 
 
   .sunburst-trail {
-    display: block;
-    background-color: rgba(white, .1);
     text-align: center;
-    color: $white;
+    color: $theme-purple;
     padding: 0;
     margin: 0;
   }
@@ -179,6 +179,39 @@ $main-color: $blue;
     &:last-of-type { display: none; }
   }
 
-  .current_root {fill: $main-color !important;}
+  .current_root {fill: darken($theme-green, 8) !important;}
+
+  svg {
+    path { fill-rule: evenodd; }
+    g { 
+      .layer-0 { fill: $theme-green; }
+      .layer-1 { fill: rgba($theme-green, .15); }
+      .layer-2 { fill: rgba($theme-green, .10); }
+      .layer-3 { fill: rgba($theme-green, .05); }
+
+      .layer-0 {
+
+      }
+
+      .layer-1 {
+        &:nth-child(even) {fill: rgba(black, 1);}
+        &:hover {fill: rgba(black, .5);}
+      }
+      
+      .layer-2 {
+        &:nth-child(even) {fill: rgba(black, .15);}
+        &:hover {fill: rgba(black, .5);}
+      }
+      
+      .layer-3 {
+        &:hover {fill: rgba(black, .5);}
+      }
+    }
+  }
+  
 
 }
+
+
+
+

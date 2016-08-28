@@ -1,26 +1,35 @@
 {% extends '_base.html' %}
 
 {% block content %}
-<div class="top-section top-section--main-color homepage-header">
-  <h1>Open Data 150</h1>
-  <h2>Canada</h2>
-</div>
-
-<section class="page-section">
-{# TODO - Sunburst should be rendered here #}
-
-</section>
-
-<section class="page-section page-section--highlight">
-  <div class="row align-center">
-    <div class="column large-8">
-      <h2>About this Project</h2>
+<div class="">
+<section class="top-section homepage-header">
+  <div class="row">
+    <div class="large-6 column">
+      <h1><img class="od500-logo" src="./images/logo.png" alt=""></h1>
+      <h2>Canada</h2>
+      <h3>About this Project</h3>
       <p>The Open Data 150 is a joint project between The Govlab and Canada’s Open Data Exchange (ODX), supported by Open North, the Federal Economic Development Agency for Southern Ontario and ThomsonReuters. It is the first comprehensive, internationally comparable mapping of Canadian companies that use open data to: launch new products and services; create commercial and nonprofit ventures, optimize their business processes, do research, make data-driven decisions, and solve complex problems.</p>
     </div>
+    <div class="large-2 column"></div>
+    <div id="sunburst-vizz" class="column large-4">
+      <div class="sunburst-wrapper">
+        <div class="sunburst-chart"></div>
+        <div class="sunburst-panel">
+          <div class="sunburst-trail"></div>
+        </div>
+      </div>
+      <div class="sunburst__side-panel">
+        <h1>Company Name</h1>
+        <h2>Company Info</h2>
+        <p>Description from Company Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda laudantium, quia at blanditiis aliquam fugiat architecto. Modi dolorum perspiciatis excepturi natus nulla quidem, repellat vel cum dolores ut repudiandae velit.</p>
+        <p><span class="button">More Information</span></p>
+      </div>
   </div>
+  
 </section>
 
-<section class="page-section page-section--main-color">
+
+<section class="page-section page-section--highlight page-section--accent-color">
   <div class="row">
     <div class="column large-12">
       <h2>How To Participate</h2>
@@ -29,14 +38,14 @@
   <div class="row">
     <div class="small-12 column medium-6">
       <a href="#" class="button button--paragraph survey-button">
-        <h3>Take the Survey</h3>
+        <h4>Take the Survey</h4>
         <p>Fill out the survey and tell us about your company's use of open data.</p>  
       </a>
       
     </div>
     <div class="small-12 column medium-6">
       <a href="#" class="button button--paragraph">
-        <h3>Remplissez le Sondage</h3>
+        <h4>Remplissez le Sondage</h4>
         <p>Remplissez le sondage et dites-nous un peu sur la façon que votre entreprise utilise les données ouvertes.</p>
       </a>
     </div>
@@ -45,9 +54,8 @@
 
 <section class="page-section page-section--zebra">
   <div class="row">
-    <div class="small-12 column medium-6"></div>
     <div class="small-12 column medium-6">
-      <h2>Study Objectives</h2>
+      <h3>Study Objectives</h3>
 
       <p>The primary objective of this project is to understand how companies are using open data, and raise awareness of the possibilities that exist for Canadian entrepreneurs to take advantage of the value of open data. Additional objectives include:</p>
 
@@ -60,13 +68,8 @@
       </ul>
       
     </div>
-  </div>
-</section>
-
-<section class="page-section page-section--zebra">
-  <div class="row">
     <div class="small-12 column medium-6">
-      <h2>Approach</h2>
+      <h3>Approach</h3>
       <p>The Open Data 150 is a collaborative project intended to identify and analyze Canada’s private sector capacity to create value from open data. The project was initiated by ODX and the information gathered by this project will give ODX and its partners deeper insight into the open data landscape that currently exists, as well as a view of what challenges need to be overcome in order to make Canadian open data companies more competitive.</p>
     </div>
   </div>
@@ -74,31 +77,25 @@
 
 <section class="page-section page-section--zebra">
   <div class="row">
-    <div class="small-12 column medium-6"></div>
     <div class="small-12 column medium-6">
-      <h2>Company Identification</h2>
+      <h3>Company Identification</h3>
 
       <p>The Open Data 150 Canada team will compile the list of companies and NGOs through (1) outreach campaigns and open calls, (2) curation and identification by experts and professional organizations, and (3) additional research methods. The results of the study will culminate in an online platform at www.opendata500.com/ca which will highlight the companies and their use of open data in Canada.</p>
 
     </div>
-  </div>
-</section>
-
-<section class="page-section page-section--zebra">
-  <div class="row">
     <div class="small-12 column medium-6">
-      <h2>What The Study Is Not</h2>
+      <h3>What The Study Is Not</h3>
 
       <p>The Open Data 150 Canada is not a rating or ranking of companies. It covers companies and entities of different sizes and categories, using various kinds of data. The Open Data 150 Canada is not a competition, but an attempt to give a broad, inclusive view of the field. The study also does not provide a random sample for definitive statistical analysis. Since this is the first thorough scan of companies and entities in the field, it is not yet possible to determine the exact landscape of open data companies and entities.</p>
     </div>
   </div>
-</div>
 </section>
+
 <section class="page-section page-section--main-color">
   <div class="row">
     <div class="large-12 column">
-      <h2>Federal Open Data</h2>
-      <h3>Timeline</h3>    
+      <h3>Federal Open Data</h3>
+      <h4>Timeline</h4>
       </div>
   </div>
   <div class="row expanded">
@@ -251,13 +248,8 @@
     </div>
   </div>
 </section>
-
-<script>
-  
-</script>
-
-
-
-
-
 {% endblock %}
+{% block script %}
+<script src="./sunburst.js"></script>
+{% endblock %}
+

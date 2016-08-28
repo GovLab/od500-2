@@ -2,9 +2,15 @@
 
 
 // context variables
-$main-color: $blue;
-$accent-color: $orange;
 
+$theme-purple: #483c6c;
+$theme-pink: #fe227c;
+// $theme-pink: #ff0058;
+$theme-green: #0cffe1;
+$theme-yellow: #ffd489;
+
+$main-color: $theme-purple;
+$accent-color: $theme-green;
 
 
 @import 'controls';

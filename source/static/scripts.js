@@ -91,7 +91,9 @@ $(document).ready(function () {
         $(latestTimelineItem).addClass("timeline-boxes__item--latest")
     });
 
-
+    $( ".timeline-boxes li" ).hover(function() { 
+      $('.timeline-boxes').toggleClass('timeline-boxes--active-' + $(this).index()); 
+    });
 
 
 
