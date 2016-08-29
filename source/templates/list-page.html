@@ -1,16 +1,11 @@
 {% extends '_base.html' %}
 
 {% block content %}
+<div class="list-page">
+
   <div class="top-section top-section--od500-header top-section--main-color">
     <h1>All Companies</h1>
   </div>
-  
-  {# TODO
-    Implement list.js in this table 
-    Implement JS to make THEAD position:fixed - needs to add the class .table-sortable--fixed to the .table-sortable component, when thead reaches top of viewport.
-  #}
-
-
 
 <div id="company_data">
   <table class="table-sortable table-sortable--main-color"> {# .table-sortable--fixed #}
@@ -87,10 +82,8 @@
     </tbody>
 
   </table>  
-
   </div>
-  
-  
+</div>
 {% endblock %}
 
 {% block script %}
