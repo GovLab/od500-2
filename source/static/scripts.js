@@ -98,8 +98,16 @@ $(document).ready(function () {
 
 
     // List.js Implementation
+    var fuzzyOptions = {
+      searchClass: "fuzzy-search",
+      location: 0,
+      distance: 100,
+      threshold: 0.4,
+        multiSearch: true
+    };
     var options = {
-        valueNames: [ 'company__name', 'company__category', 'company__type', 'company__founded', 'company__location', 'company__last-update' ]
+    valueNames: [ {name:'company__name', attr:'data-target'}, 'company__category', 'company__type', 'company__founded', {name:'company__location', attr:'data-target'}, 'company__last-update' ],
+        plugins: [ ListFuzzySearch() ]                  
     };
 
     var companyList = new List('company_data', options);
@@ -110,18 +118,15 @@ $(document).ready(function () {
     }
 
     // Filter by name and location
-    $(".search").keyup(function() {
-        console.log(this)
+    $(".fuzzy-search").keyup(function() {
         if (this.id=="company__name--input") {
             var searchString = $(this).val();
-            console.log(this)
-            companyList.search(searchString, ["company__name"] );
+            companyList.fuzzySearch.search(searchString, ["company__name"]);
         } else if (this.id=="company__location--input") {
             var searchString = $(this).val();
-            companyList.search(searchString, ["company__location"]);
+            companyList.fuzzySearch.search(searchString, ["company__location"]);
         } 
     });
-
 
     $(".js-open-table-search").on("click", function(e) {
        $($(this).attr('data-target')).focus();
