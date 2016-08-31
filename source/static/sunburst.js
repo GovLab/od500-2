@@ -81,9 +81,20 @@ $(document).ready(function(){
     return  html;
   }
 
+  function getSunburstData(root){
+    var data = partition.nodes(root).filter(
+        function (d) {
+            return d.depth < 3
+        });
+    return data
+  }
+
+  function getCompanyNodes(node) {
+    return node.children
+  }
 d3.json("sunburst-no-data-new.json", function(error, root) {
   var g = svg.selectAll("g")
-      .data(partition.nodes(root))
+      .data(getSunburstData(root))
     .enter().append("g");
 
   var path = g.append("path")
@@ -109,6 +120,26 @@ d3.json("sunburst-no-data-new.json", function(error, root) {
     tooltips.html("")
     trail.html("")
   });
+
+
+
+  d3.selectAll(".layer-2").each(function(layer) {
+      var companyData = getCompanyNodes(layer)
+      var startAngle = arc.startAngle()(layer);
+      var endAngle = arc.endAngle()(layer);
+      console.log("s", startAngle)
+      console.log("e", endAngle)
+
+      var circles = d3.selectAll("g").append("circle")
+        .attr("r", 4) 
+        .attr("cx", function(layer) { 
+          return Math.sin((startAngle)) *radius;
+        })
+        .attr("cy", function(layer) { 
+          return -Math.cos((startAngle)) *radius;
+        });
+  })
+
 
   function highlightSequence(d) {
     var sequenceArray = getAncestors(d)
